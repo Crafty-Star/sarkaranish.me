@@ -1,0 +1,19 @@
+title: Anish Sarkar
+author: Anish Sarkar
+email: anishsarkar@proofschool.org
+description: >-
+  This exists.
+baseurl: "/" # the subpath of your site, e.g. /blog
+url: "https://anishsarkar.me" # your site's origin, e.g. https://forestry.io
+
+# Build settings
+defaults:
+  - scope:
+      path: "" # an empty string here means all files in the project
+    values:
+      layout: "default" # this ensures all content renders with layouts/default.html
+
+plugins:
+  - jekyll-feed
+  - jekyll-menus
+
