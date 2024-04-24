@@ -1,7 +1,3 @@
-# notes
+# anish's website
 
-teach anish everything about site
-
-and figure out tag automation, since this is is really easy.
-
-add site customization, like font / colors since that lives in the css
+hey! this is agniv, the maker of this one. i like how the images are so far, its pretty automated now, though i could prob fix it up further lol
