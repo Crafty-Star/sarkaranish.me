@@ -21,21 +21,24 @@ images:
 	<!-- Custom CSS for Text Boxes -->
 	<style>
 		.text-box {
-			width: 500px; /* Initial width */
-			height: 300px; /* Initial height */
+			width: 50px; /* Initial width */
+			height: 150px; /* Initial height */
 			margin: 15px; /* Spacing between boxes */
 			padding: 10px; /* Inner padding */
 			background-color: #858585; /* Background color */
 			border: 1px solid #ccc; /* Border */
-			text-align: center; /* Center text */
+			text-align: center; /* Center text horizontally */
+			display: flex; /* Enable flexbox */
+			align-items: center; /* Center text vertically */
 			line-height: 30px; /* Center text vertically */
 			transition: all 0.3s ease; /* Smooth transition for hover effect */
 			cursor: pointer; /* Pointer cursor on hover */
 			color: #3a8055; /* Text color */
+			font-size: 25px; /* Increased text size */
 		}
 
 		.text-box:hover {
-			transform: scale(1.3); /* Increase size on hover */
+			transform: scaleX(1.3); /* Increase horizontal size on hover */
 			background-color: #5e5e5e; /* Change background color on hover */
 		}
 	</style>
