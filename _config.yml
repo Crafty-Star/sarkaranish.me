@@ -26,6 +26,7 @@ comments :
 
 # Internal nav
 nav:
+  - HOME: "/"
   - GALLERY: "/gallery/"  
   - PROJECTS: "/projects/"
   - ABOUT: "/about/"

@@ -1,8 +1,8 @@
 ---
 layout: home
 main-title: "ANISH SARKAR"
-subtitle: "Bay Area"
-description: "photography / papercraft / biomed"
+subtitle: "Proof School Senior"
+description: "photography / papercraft / biomed / digital fabrication & modeling"
 images:
 - image_path: /gallery/Lightbox/20240416-7.jpg
   gallery-folder: /gallery/Lightbox/
@@ -10,86 +10,135 @@ images:
 
 <html class="no-js" lang="en">
 <head>
-	<meta content="charset=utf-8">
+    <meta content="charset=utf-8">
 
-	<!-- CSS Links -->
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="{{ site.baseurl }}/css/main.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="{{ site.baseurl }}/css/galleries.css" media="screen" />
-	<link rel="stylesheet" href="{{ site.baseurl }}/css/WYSIWYG.css" media="screen" />
+    <!-- CSS Links -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/main.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/galleries.css" media="screen" />
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/WYSIWYG.css" media="screen" />
 
-	<!-- Custom CSS for Text Boxes -->
-	<style>
-		.text-box {
-			width: 750px; /* Initial width */
-			height: 200px; /* Initial height */
-			margin: 15px; /* Spacing between boxes */
-			padding: 10px; /* Inner padding */
-			background-color: #858585; /* Background color */
-			border: 1px solid #ccc; /* Border */
-			text-align: center; /* Center text horizontally */
-			display: flex; /* Enable flexbox */
-			align-items: center; /* Center text vertically */
-			line-height: 30px; /* Center text vertically */
-			transition: all 0.3s ease; /* Smooth transition for hover effect */
-			cursor: pointer; /* Pointer cursor on hover */
-			color: #3a8055; /* Text color */
-			font-size: 25px; /* Increased text size */
-		}
+    <!-- Custom CSS -->
+    <style>
+        body.fullscreen {
+            overflow-y: auto;
+        }
 
-		.text-box:hover {
-			transform: scaleX(1.75); /* Increase horizontal size on hover */
-			background-color: #5e5e5e; /* Change background color on hover */
-		}
-	</style>
+        .gallery-section {
+            height: 50vh;
+            position: relative;
+            overflow: hidden;
+        }
 
-	<!-- Modernizr -->
-	<script src="{{ site.baseurl }}/js/modernizr.js"></script>
+        .gallery.kenburns-gallery {
+            height: 100%;
+        }
+
+        .position-absolute {
+            position: absolute;
+            z-index: 2;
+            color: white;
+            padding: 20px;
+        }
+
+        .text-boxes-container {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            background-color: #f5f5f5;
+        }
+
+        .text-box {
+            width: 550px;
+            height: 200px;
+            padding: 20px;
+            background-color: #5b5b5b;
+            color: #3a8055;
+            font-size: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            line-height: 30px;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        .text-box:hover {
+            transform: scale(1.25);
+            background-color: #b7b7b7;
+            z-index: 10;
+        }
+
+        .text-box.box1:hover {
+            background-image: url('{{ site.baseurl }}/gallery/Lightbox/20240416-7.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .text-box.box2:hover {
+            background-image: url('{{ site.baseurl }}/gallery/Lightbox/20240416-7.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .text-box.box3:hover {
+            background-image: url('{{ site.baseurl }}/gallery/Lightbox/20240416-7.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+
+    <!-- Modernizr -->
+    <script src="{{ site.baseurl }}/js/modernizr.js"></script>
 </head>
 
 <body class="fullscreen">
 
-<!-- MAIN CONTENT SECTION  _____________________________________________-->
+<!-- MAIN CONTENT SECTION -->
 <section id="content" role="main">
-	<div class="wrapper">
+    <!-- HEADER AND GALLERY SECTION -->
+    <div class="gallery-section">
+        <div class="position-absolute">
+            <h2 class="big no-margin"><strong>{{ page.main-title }}</strong></h2>
+            <h2>{{ page.subtitle }}</h2>
+            <div class="entry-summary">
+                <p>{{ page.description }}</p>
+            </div>
+        </div>
 
-		<!-- HEADER SECTION -->
-		<div class="position-absolute">
-			<h2 class="big no-margin"><strong>{{ page.main-title }}</strong></h2>
-			<h2>{{ page.subtitle }}</h2>
-			<div class="entry-summary">
-				<p>{{ page.description }}</p>
-			</div><br />
-		</div>
-		<!-- END HEADER SECTION -->
+        <div class="gallery kenburns-gallery">
+            <canvas id="kenburns"></canvas>
+            {% for image in page.images %}
+            <figure class="gallery-item">
+                <header class='gallery-icon'>
+                    <a href="{{ site.url }}{{ site.baseurl }}{{ image.gallery-folder }}">
+                        <img src="{{ site.url }}{{ site.baseurl }}{{ image.image_path }}">
+                    </a>
+                </header>    
+            </figure>
+            {% endfor %}
+        </div>
+    </div>
 
-		<!-- GALLERY SECTION -->
-		<div class="gallery fullscreen-gallery kenburns-gallery">
-			<canvas id="kenburns"></canvas>
-			
-			{% for image in page.images %}
-				<figure class="gallery-item">
-					<header class='gallery-icon'>
-						<a href="{{ site.url }}{{ site.baseurl }}{{ image.gallery-folder }}">
-							<img src="{{ site.url }}{{ site.baseurl }}{{ image.image_path }}">
-						</a>
-					</header>	
-				</figure>
-			{% endfor %}
-		</div>
-		<!-- END GALLERY SECTION -->
-
-		<!-- NEW TEXT BOXES SECTION -->
-		<div class="text-boxes" style="position: absolute; right: 20px; top: 100px;"> <!-- Positioning for text boxes -->
-			<div class="text-box" onclick="location.href='{{ site.baseurl }}/gallery';">Gallery</div> <!-- Link to Gallery -->
-			<div class="text-box" onclick="location.href='{{ site.baseurl }}/research';">Projects</div> <!-- Link to Research -->
-			<div class="text-box" onclick="location.href='{{ site.baseurl }}/about';">About Myself</div> <!-- Link to About Myself -->
-		</div>
-		<!-- END TEXT BOXES SECTION -->
-
-	</div><!-- END .wrapper -->
+    <!-- TEXT BOXES SECTION -->
+    <div class="text-boxes-container">
+        <div class="text-box box1">
+            Photography
+        </div>
+        <div class="text-box box2">
+            Papercraft
+        </div>
+        <div class="text-box box3">
+            Digital Fabrication
+        </div>
+    </div>
 </section>
-<!-- END MAIN CONTENT SECTION -->
 
 <!-- SCRIPTS SECTION -->
 <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
@@ -100,8 +149,6 @@ images:
 <script src="{{ site.baseurl }}/js/kenburns.min.js"></script>
 <script src="{{ site.baseurl }}/js/jquery.lazylinepainter.min.js"></script>
 <script src="{{ site.baseurl }}/js/scripts.js"></script>
-<!-- END SCRIPTS SECTION -->
 
 </body>
 </html>
-
