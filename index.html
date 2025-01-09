@@ -5,156 +5,156 @@ subtitle: "Proof School Senior"
 description: "photography / papercraft / biomed / digital fabrication & modeling"
 about_path: "/img/about-self.jpg"
 images:
-- image_path: /gallery/Kusudamas/Electra_24.jpg
-  gallery-folder: /gallery/Kusudamas
+ - image_path: /img/slider/render.png
+   gallery-folder: /img/slider/
+ - image_path: /img/slider/fold.jpg
+   gallery-folder: /img/slider/
+ - image_path: /img/slider/stairs.jpg
+   gallery-folder: /img/slider/
 ---
 
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-    <meta content="charset=utf-8">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <meta content="charset=utf-8"> <!-- Sets character encoding -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> <!-- Font Awesome for icons -->
     <style>
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            margin: 0; /* Resets margin for all elements */
+            padding: 0; /* Resets padding for all elements */
+            box-sizing: border-box; /* Ensures padding and border are included in element's total width and height */
         }
 
         body.fullscreen {
-            overflow-y: auto;
-            background-color: #1a1a1a;
-            color: white;
-            min-height: 100vh;
+            overflow-y: auto; /* Allows vertical scrolling */
+            background-color: #1a1a1a; /* Dark background color */
+            color: white; /* White text color */
+            min-height: 100vh; /* Minimum height of the body is 100% of the viewport height */
         }
 
         .gallery-section {
-            height: 75vh;
-            position: relative;
-            overflow: hidden;
-            background: transparent;
-            margin-bottom: 50px;
+            height: 75vh; /* Sets height of the gallery section */
+            position: relative; /* Allows absolute positioning of child elements */
+            overflow: hidden; /* Hides overflow content */
+            background: transparent; /* Transparent background */
+            margin-bottom: 50px; /* Space below the gallery section */
         }
 
         .gallery.kenburns-gallery {
-            height: 100%;
-            width: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
+            height: 100%; /* Full height of the parent */
+            width: 100%; /* Full width of the parent */
+            position: absolute; /* Positioned absolutely within the gallery section */
+            top: 0; /* Aligns to the top */
+            left: 0; /* Aligns to the left */
+            z-index: 1; /* Stacks behind other elements */
         }
 
         #kenburns {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
+            width: 100%; /* Full width for the canvas */
+            height: 100%; /* Full height for the canvas */
+            position: absolute; /* Positioned absolutely within the gallery */
+            top: 0; /* Aligns to the top */
+            left: 0; /* Aligns to the left */
         }
 
         .position-absolute {
-            position: absolute;
-            z-index: 2;
-            padding: 40px;
-            background: linear-gradient(to bottom, rgba(79, 79, 79, 0.7) 0%, rgba(98, 98, 98, 0) 100%);
-            width: 100%;
+            position: absolute; /* Positioned absolutely within the gallery section */
+            z-index: 2; /* Stacks above the gallery */
+            padding: 40px; /* Padding around the content */
+            background: linear-gradient(to bottom, rgba(79, 79, 79, 0.7) 0%, rgba(98, 98, 98, 0) 100%); /* Gradient background */
+            width: 100%; /* Full width */
         }
 
         .text-boxes-container {
-            min-height: 100vh;
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-            background-color: #1a1a1a;
-            transform: skew(0deg, -5deg);
-            margin-top: -50px;
+            min-height: 100vh; /* Minimum height of the container */
+            padding: 40px; /* Padding around the container */
+            display: flex; /* Flexbox layout */
+            flex-direction: column; /* Stacks children vertically */
+            align-items: center; /* Centers children horizontally */
+            position: relative; /* Allows absolute positioning of child elements */
+            background-color: #1a1a1a; /* Dark background color */
+            transform: skew(0deg, -5deg); /* Skews the container */
+            margin-top: -50px; /* Negative margin to overlap with the gallery */
         }
 
         .text-boxes-wrapper {
-            transform: skew(0deg, 5deg);
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            width: 100%;
-            max-width: 1200px;
+            transform: skew(0deg, 5deg); /* Skews the wrapper back to normal */
+            display: flex; /* Flexbox layout */
+            flex-direction: column; /* Stacks children vertically */
+            gap: 40px; /* Space between children */
+            width: 100%; /* Full width */
+            max-width: 1200px; /* Maximum width */
         }
 
         .text-box {
-            width: 80%;
-            height: 200px;
-            padding: 30px;
-            background-color: #707070;
-            color: #fff;
-            font-size: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            text-decoration: none;
+            width: 80%; /* Width of each text box */
+            height: 200px; /* Height of each text box */
+            padding: 30px; /* Padding inside the text box */
+            background-color: #707070; /* Background color of the text box */
+            color: #fff; /* Text color */
+            font-size: 25px; /* Font size */
+            display: flex; /* Flexbox layout */
+            align-items: center; /* Centers text vertically */
+            justify-content: center; /* Centers text horizontally */
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth transition for hover effects */
+            cursor: pointer; /* Pointer cursor on hover */
+            position: relative; /* Allows absolute positioning of child elements */
+            overflow: hidden; /* Hides overflow content */
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* Shadow effect */
+            text-decoration: none; /* Removes underline from links */
         }
 
-        .text-box:nth-child(1) { align-self: flex-start; }
-        .text-box:nth-child(2) { align-self: center; }
-        .text-box:nth-child(3) { align-self: flex-end; }
-
         .text-box:hover {
-            transform: scale(1.25);
-            z-index: 10;
+            transform: scale(1.25); /* Scales up the text box on hover */
+            z-index: 10; /* Brings the hovered box above others */
         }
 
         .text-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transition: opacity 0.8s ease;
+            content: ''; /* Empty content for the pseudo-element */
+            position: absolute; /* Positioned absolutely within the text box */
+            top: 0; /* Aligns to the top */
+            left: 0; /* Aligns to the left */
+            right: 0; /* Aligns to the right */
+            bottom: 0; /* Aligns to the bottom */
+            background-size: cover; /* Covers the entire area */
+            background-position: center; /* Centers the background image */
+            opacity: 0; /* Initially hidden */
+            transition: opacity 0.8s ease; /* Smooth transition for opacity */
         }
 
         .text-box:hover::before {
-            opacity: 0.8;
+            opacity: 0.8; /* Shows background on hover */
         }
 
         .text-box span {
-            position: relative;
-            z-index: 1;
-            font-weight: bold;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            position: relative; /* Allows stacking above the pseudo-element */
+            z-index: 1; /* Stacks above the background */
+            font-weight: bold; /* Bold text */
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* Shadow effect for text */
         }
 
         .box1::before {
-            background-image: url('{{ site.baseurl }}{{ about_path }}');
+            background-image: url('{{ site.baseurl }}{{ about_path }}'); /* Background image for box1 */
         }
 
         .box2::before {
-            background-image: url('{{ site.baseurl }}/gallery/Lightbox/20240416-7.jpg');
+            background-image: url('{{ site.baseurl }}/gallery/Lightbox/20240416-7.jpg'); /* Background image for box2 */
         }
 
         .box3::before {
-            background-image: url('{{ site.baseurl }}/gallery/Projects/project-cover.jpg');
+            background-image: url('{{ site.baseurl }}/gallery/Projects/project-cover.jpg'); /* Background image for box3 */
         }
 
         .big {
-            font-size: 2.5em;
-            margin-bottom: 10px;
+            font-size: 2.5em; /* Larger font size for headings */
+            margin-bottom: 10px; /* Space below the heading */
         }
 
         .entry-summary {
-            margin-top: 20px;
-            font-size: 1.2em;
-            max-width: 600px;
+            margin-top: 20px; /* Space above the summary */
+            font-size: 1.2em; /* Font size for the summary */
+            max-width: 600px; /* Maximum width for the summary */
         }
     </style>
 </head>
@@ -162,19 +162,19 @@ images:
     <section id="content" role="main">
         <div class="gallery-section">
             <div class="position-absolute">
-                <h2 class="big"><strong>{{ page.main-title }}</strong></h2>
-                <h2>{{ page.subtitle }}</h2>
+                <h2 class="big"><strong>{{ page.main-title }}</strong></h2> <!-- Main title -->
+                <h2>{{ page.subtitle }}</h2> <!-- Subtitle -->
                 <div class="entry-summary">
-                    <p>{{ page.description }}</p>
+                    <p>{{ page.description }}</p> <!-- Description -->
                 </div>
             </div>
 
             <div class="gallery kenburns-gallery">
-                <canvas id="kenburns"></canvas>
+                <canvas id="kenburns"></canvas> <!-- Canvas for Ken Burns effect -->
                 {% for image in page.images %}
                 <figure class="gallery-item">
                     <header class='gallery-icon'>
-                        <img src="{{ site.url }}{{ site.baseurl }}{{ image.image_path }}">
+                        <img src="{{ site.url }}{{ site.baseurl }}{{ image.image_path }}"> <!-- Image source -->
                     </header>    
                 </figure>
                 {% endfor %}
@@ -184,37 +184,37 @@ images:
         <div class="text-boxes-container">
             <div class="text-boxes-wrapper">
                 <a href="/about" class="text-box box1">
-                    <span>Who is Anish?</span>
+                    <span>Who is Anish?</span> <!-- Link to about section -->
                 </a>
                 <a href="/gallery" class="text-box box2">
-                    <span>My Photos</span>
+                    <span>My Photos</span> <!-- Link to gallery -->
                 </a>
                 <a href="/projects" class="text-box box3">
-                    <span>Projects I've done</span>
+                    <span>Projects I've done</span> <!-- Link to projects -->
                 </a>
             </div>
         </div>
     </section>
 
 <!-- SCRIPTS SECTION -->
-<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="{{ site.baseurl }}/js/retina.min.js"></script>
-<script src="{{ site.baseurl }}/js/jquery.mousewheel.min.js"></script>
-<script src="{{ site.baseurl }}/js/jquery.cycle.min.js"></script>
-<script src="{{ site.baseurl }}/js/kenburns.min.js"></script>
-<script src="{{ site.baseurl }}/js/jquery.lazylinepainter.min.js"></script>
-<script src="{{ site.baseurl }}/js/scripts.js"></script>
+<script src="//code.jquery.com/jquery-2.1.3.min.js"></script> <!-- jQuery library -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script> <!-- Bootstrap JS -->
+<script src="{{ site.baseurl }}/js/retina.min.js"></script> <!-- Retina display support -->
+<script src="{{ site.baseurl }}/js/jquery.mousewheel.min.js"></script> <!-- Mouse wheel support -->
+<script src="{{ site.baseurl }}/js/jquery.cycle.min.js"></script> <!-- Cycle plugin for slideshows -->
+<script src="{{ site.baseurl }}/js/kenburns.min.js"></script> <!-- Ken Burns effect plugin -->
+<script src="{{ site.baseurl }}/js/jquery.lazylinepainter.min.js"></script> <!-- Lazy line painter for animations -->
+<script src="{{ site.baseurl }}/js/scripts.js"></script> <!-- Custom scripts -->
 <script>
     $(document).ready(function() {
-        if ($('#kenburns').length) {
+        if ($('#kenburns').length) { // Checks if the canvas exists
             $('#kenburns').kenburns({
-                images: [{% for image in page.images %}'{{ site.baseurl }}{{ image.image_path }}'{% unless forloop.last %},{% endunless %}{% endfor %}],
-                frames_per_second: 30,
-                display_time: 5000,
-                fade_time: 1000,
-                zoom: 1.2,
-                background_color: '#000000'
+                images: [{% for image in page.images %}'{{ site.baseurl }}{{ image.image_path }}'{% unless forloop.last %},{% endunless %}{% endfor %}], // Array of images for the Ken Burns effect
+                frames_per_second: 30, // Frame rate for the effect
+                display_time: 5000, // Time each image is displayed
+                fade_time: 1000, // Fade time between images
+                zoom: 1.2, // Zoom level
+                background_color: '#000000' // Background color
             });
         }
     });
