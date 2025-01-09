@@ -6,7 +6,6 @@ description: "photography / papercraft / biomed /
                 mechanical engineering"
 about_path: "/img/about-self.jpg"
 images:
-
 - image_path: /img/slider/render.png
   gallery-folder: /img/slider/
 - image_path: /img/slider/fold.jpg
@@ -150,15 +149,15 @@ images:
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
-        .box1::before {
-            background-image: url('{{ site.baseurl }}{{ about_path }}');
+        .box1::after {
+            background-image: url('{{ site.baseurl }}about_path ');
         }
 
-        .box2::before {
+        .box2::after {
             background-image: url('{{ site.baseurl }}/gallery/Lightbox/20240416-7.jpg');
         }
 
-        .box3::before {
+        .box3::after {
             background-image: url('{{ site.baseurl }}/gallery/Projects/project-cover.jpg');
         }
 
