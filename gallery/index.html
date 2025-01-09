@@ -12,64 +12,182 @@ images:
    gallery-folder: /img/slider/
 ---
 
-<!-- This is a Jekyll template file that creates a photo gallery -->
+<!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-	<meta content="charset=utf-8">
-
-	<!-- External CSS imports for styling -->
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="{{ site.baseurl }}/css/main.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="{{ site.baseurl }}/css/galleries.css" media="screen" />
-	<link rel="stylesheet" href="{{ site.baseurl }}/css/WYSIWYG.css" media="screen" />
-
-	<!-- Modernizr for browser compatibility -->
-	<script src="{{ site.baseurl }}/js/modernizr.js"></script>
+    <meta content="charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/main.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/galleries.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/WYSIWYG.css">
+    
+    <style>
+        .catalog-section {
+            margin: 50px 0;
+        }
+        
+        .catalog-title {
+            width: 100%;
+            text-align: center;
+            font-size: 2em;
+            margin: 30px 0;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+        
+        .mason-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .album-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .album-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .album-title {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+        }
+    </style>
+    
+    <script src="{{ site.baseurl }}/js/modernizr.js"></script>
 </head>
 
-<body class="fullscreen">
-	<!-- Main content section -->
-	<section id="content" role="main">
-		<div class="wrapper">
-			<!-- Title and description section -->
-			<div class="position-absolute">
-				<h2 class="big no-margin"><strong>{{ page.main-title }}</strong></h2>
-				<h2>{{ page.subtitle }}</h2> 
-				<div class="entry-summary">
-					<p>{{ page.description }}</p>
-				</div><br />
-			</div>
-			
-			<!-- Gallery section with kenburns effect -->
-			<div class="gallery fullscreen-gallery kenburns-gallery">
-				<canvas id="kenburns"></canvas>
-				
-				<!-- Loop through images defined in front matter -->
-				{% for image in page.images %}  	
-				<figure class="gallery-item">
-					<header class='gallery-icon'>
-						<a href="{{ site.url }}{{ site.baseurl }}{{ image.gallery-folder }}">
-							<img src="{{ site.url }}{{ site.baseurl }}{{ image.image_path }}">
-						</a>
-					</header>	
-				</figure>
-				{% endfor %}
-			</div>
-		</div>
-	</section>
+<body>
+    <!-- Top Slideshow Section -->
+    <section class="slideshow-section" style="height: 100vh;">
+        <div class="wrapper">
+            <div class="position-absolute">
+                <h2 class="big no-margin"><strong>{{ page.main-title }}</strong></h2>
+                <h2>{{ page.subtitle }}</h2> 
+                <div class="entry-summary">
+                    <p>{{ page.description }}</p>
+                </div>
+            </div>
+            
+            <div class="gallery fullscreen-gallery kenburns-gallery">
+                <canvas id="kenburns"></canvas>
+                {% for image in page.images %}  	
+                <figure class="gallery-item">
+                    <header class='gallery-icon'>
+                        <a href="{{ site.url }}{{ site.baseurl }}{{ image.gallery-folder }}">
+                            <img src="{{ site.url }}{{ site.baseurl }}{{ image.image_path }}">
+                        </a>
+                    </header>	
+                </figure>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 
-	
-	<!-- JavaScript imports -->
-	<!-- jQuery core -->
-	<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-	
-	<!-- Various plugins for gallery functionality -->
-	<script src="{{ site.baseurl }}/js/retina.min.js"></script>
-	<script src="{{ site.baseurl }}/js/jquery.mousewheel.min.js"></script>
-	<script src="{{ site.baseurl }}/js/jquery.cycle.min.js"></script>
-	<script src="{{ site.baseurl }}/js/kenburns.min.js"></script>
-	<script src="{{ site.baseurl }}/js/jquery.lazylinepainter.min.js"></script>
-	<script src="{{ site.baseurl }}/js/scripts.js"></script>
+    <!-- Catalogs Section -->
+    <section id="catalogs" class="catalogs-section">
+        <div class="wrapper">
+            <div id="catalog-container"></div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{{ site.baseurl }}/js/retina.min.js"></script>
+    <script src="{{ site.baseurl }}/js/jquery.mousewheel.min.js"></script>
+    <script src="{{ site.baseurl }}/js/jquery.cycle.min.js"></script>
+    <script src="{{ site.baseurl }}/js/kenburns.min.js"></script>
+    
+    <script>
+        // Function to load and organize albums
+        async function loadAlbums() {
+            try {
+                // Fetch all directories
+                const response = await fetch('/api/get-directories');
+                const directories = await response.json();
+                
+                // Organize albums by catalog
+                const catalogs = {};
+                
+                directories.forEach(dir => {
+                    // Extract catalog name from directory name (format: catalog_name_album_name)
+                    const match = dir.name.match(/^([^_]+)_/);
+                    if (match) {
+                        const catalogName = match[1];
+                        if (!catalogs[catalogName]) {
+                            catalogs[catalogName] = [];
+                        }
+                        catalogs[catalogName].push({
+                            name: dir.name.replace(`${catalogName}_`, '').replace(/_/g, ' '),
+                            path: dir.path,
+                            thumbnail: `${dir.path}/thumbnail.jpg` // Assuming each album has a thumbnail.jpg
+                        });
+                    }
+                });
+                
+                // Create HTML for each catalog
+                const container = document.getElementById('catalog-container');
+                
+                Object.entries(catalogs).forEach(([catalogName, albums]) => {
+                    const catalogSection = document.createElement('div');
+                    catalogSection.className = 'catalog-section';
+                    
+                    const title = document.createElement('h2');
+                    title.className = 'catalog-title';
+                    title.textContent = catalogName.charAt(0).toUpperCase() + catalogName.slice(1);
+                    
+                    const gallery = document.createElement('div');
+                    gallery.className = 'mason-gallery';
+                    
+                    albums.forEach(album => {
+                        gallery.innerHTML += `
+                            <div class="album-card">
+                                <a href="${album.path}">
+                                    <img src="${album.thumbnail}" alt="${album.name}">
+                                    <div class="album-title">${album.name}</div>
+                                </a>
+                            </div>
+                        `;
+                    });
+                    
+                    catalogSection.appendChild(title);
+                    catalogSection.appendChild(gallery);
+                    container.appendChild(catalogSection);
+                });
+            } catch (error) {
+                console.error('Error loading albums:', error);
+            }
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize the slideshow
+            if (document.getElementById('kenburns')) {
+                const kenburns = new KenBurns({
+                    images: Array.from(document.querySelectorAll('.gallery-item img')).map(img => img.src),
+                    duration: 6000,
+                    fadeDelay: 3000,
+                    scale: 1.1
+                });
+            }
+            
+            // Load the albums
+            loadAlbums();
+        });
+    </script>
 </body>
 </html>
