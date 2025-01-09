@@ -2,11 +2,18 @@
 layout: home
 main-title: "ANISH SARKAR"
 subtitle: "Proof School Senior"
-description: "photography / papercraft / biomed / digital fabrication & modeling"
+description: "photography / papercraft / biomed / 
+                mechanical engineering"
 about_path: "/img/about-self.jpg"
 images:
 - image_path: /gallery/Kusudamas/Electra_24.jpg
   gallery-folder: /gallery/Kusudamas
+- image_path: /img/slider/render.png
+  gallery-folder: /img/slider/
+- image_path: /img/slider/fold.jpg
+  gallery-folder: /img/slider/
+- image_path: /img/slider/stairs.jpg
+  gallery-folder: /img/slider/
 ---
 
 <!DOCTYPE html>
@@ -14,6 +21,16 @@ images:
 <head>
     <meta content="charset=utf-8">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    <!-- External CSS imports for styling -->
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="{{ site.baseurl }}/css/main.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="{{ site.baseurl }}/css/galleries.css" media="screen" />
+	<link rel="stylesheet" href="{{ site.baseurl }}/css/WYSIWYG.css" media="screen" />
+
+	<!-- Modernizr for browser compatibility -->
+	<script src="{{ site.baseurl }}/js/modernizr.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -23,7 +40,7 @@ images:
 
         body.fullscreen {
             overflow-y: auto;
-            background-color: #1a1a1a;
+            background-color: #BFC2C7;
             color: white;
             min-height: 100vh;
         }
@@ -57,7 +74,7 @@ images:
             position: absolute;
             z-index: 2;
             padding: 40px;
-            background: linear-gradient(to bottom, rgba(79, 79, 79, 0.7) 0%, rgba(98, 98, 98, 0) 100%);
+            background: linear-gradient(to bottom, #BFC2C7 0%, #BFC2C7 100%);
             width: 100%;
         }
 
@@ -86,7 +103,7 @@ images:
             width: 80%;
             height: 200px;
             padding: 30px;
-            background-color: #707070;
+            background-color: #BFC2C7;
             color: #fff;
             font-size: 25px;
             display: flex;
@@ -159,15 +176,17 @@ images:
     </style>
 </head>
 <body class="fullscreen">
-    <section id="content" role="main">
-        <div class="gallery-section">
-            <div class="position-absolute">
-                <h2 class="big"><strong>{{ page.main-title }}</strong></h2>
-                <h2>{{ page.subtitle }}</h2>
-                <div class="entry-summary">
-                    <p>{{ page.description }}</p>
-                </div>
-            </div>
+    <!-- Main content section -->
+	<section id="content" role="main">
+		<div class="wrapper">
+			<!-- Title and description section -->
+			<div class="position-absolute">
+				<h2 class="big no-margin"><strong>{{ page.main-title }}</strong></h2>
+				<h2>{{ page.subtitle }}</h2> 
+				<div class="entry-summary">
+					<p>{{ page.description }}</p>
+				</div><br />
+			</div>
 
             <div class="gallery kenburns-gallery">
                 <canvas id="kenburns"></canvas>
@@ -187,13 +206,97 @@ images:
                     <span>Who is Anish?</span>
                 </a>
                 <a href="/gallery" class="text-box box2">
-                    <span>My Photos</span>
+                    <span>Photos I've taken</span>
                 </a>
                 <a href="/projects" class="text-box box3">
                     <span>Projects I've done</span>
                 </a>
             </div>
         </div>
+
+
+        <!-- Footer with social media links -->
+	<div id="footer" role="contentinfo">
+		<ul class="soc-icons">
+			{% if site.facebook_username %}
+			<li>
+				<a href="https://facebook.com/{{ site.facebook_username }}" 
+					style="color: #dddddd;" 
+					target="_blank" 
+					title="Facebook">
+					<i class="fa fa-facebook"></i>
+				</a>
+			</li>
+			{% endif %}
+
+			{% if site.twitter_username %}
+			<li>
+				<a href="https://twitter.com/{{ site.twitter_username }}" 
+					style="color: #dddddd;" 
+					target="_blank" 
+					title="Twitter">
+					<i class="fa fa-twitter"></i>
+				</a>
+			</li>
+			{% endif %}
+
+			{% if site.instagram_username %}
+			<li>
+				<a href="https://instagram.com/{{ site.instagram_username }}" 
+					style="color: #dddddd;" 
+					target="_blank" 
+					title="Instagram">
+					<i class="fa fa-instagram"></i>
+				</a>
+			</li>
+			{% endif %}
+
+			{% if site.flickr_username %}
+			<li>
+				<a href="https://flickr.com/photos/{{ site.flickr_username }}" 
+					style="color: #dddddd;" 
+					target="_blank" 
+					title="Flickr">
+					<i class="fa fa-flickr"></i>
+				</a>
+			</li>
+			{% endif %}
+
+			{% if site.deviantart_username %}
+			<li>
+				<a href="http://{{ site.deviantart_username }}.deviantart.com" 
+					style="color: #dddddd;" 
+					target="_blank" 
+					title="DeviantArt">
+					<i class="fa fa-deviantart"></i>
+				</a>
+			</li>
+			{% endif %}
+
+			{% if site.github_username %}
+			<li>
+				<a href="https://github.com/{{ site.github_username }}" 
+					style="color: #dddddd;" 
+					target="_blank" 
+					title="Github">
+					<i class="fa fa-github"></i>
+				</a>
+			</li>
+			{% endif %}
+
+			<li>
+				<a href="mailto:{{ site.email }}" 
+					style="color: #dddddd;" 
+					target="_blank" 
+					title="Email">
+					<i class="fa fa-envelope-o"></i>
+				</a>
+			</li>
+		</ul>	
+	</div>
+
+
+
     </section>
 
 <!-- SCRIPTS SECTION -->
