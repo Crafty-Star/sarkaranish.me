@@ -162,14 +162,6 @@ images:
 <body class="fullscreen">
     <section id="content" role="main">
         <div class="gallery-section">
-            <div class="position-absolute">
-                <h2 class="big"><strong>{{ page.main-title }}</strong></h2>
-                <h2>{{ page.subtitle }}</h2>
-                <div class="entry-summary">
-                    <p>{{ page.description }}</p>
-                </div>
-            </div>
-
             <div class="gallery kenburns-gallery">
                 <canvas id="kenburns"></canvas>
                 {% for image in page.images %}
@@ -179,6 +171,14 @@ images:
                     </header>    
                 </figure>
                 {% endfor %}
+            </div>
+        </div>
+
+        <div class="position-absolute">
+            <h2 class="big"><strong>{{ page.main-title }}</strong></h2>
+            <h2>{{ page.subtitle }}</h2>
+            <div class="entry-summary">
+                <p>{{ page.description }}</p>
             </div>
         </div>
 
