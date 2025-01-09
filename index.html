@@ -222,20 +222,7 @@ images:
 <script src="{{ site.baseurl }}/js/kenburns.min.js"></script>
 <script src="{{ site.baseurl }}/js/jquery.lazylinepainter.min.js"></script>
 <script src="{{ site.baseurl }}/js/scripts.js"></script>
-<script>
-    $(document).ready(function() {
-        if ($('#kenburns').length) {
-            $('#kenburns').kenburns({
-                images: [{% for image in page.images %}'{{ site.baseurl }}{{ image.image_path }}'{% unless forloop.last %},{% endunless %}{% endfor %}],
-                frames_per_second: 30,
-                display_time: 5000,
-                fade_time: 1000,
-                zoom: 1.2,
-                background_color: '#000000'
-            });
-        }
-    });
-</script>
+
 
 </body>
 </html>
