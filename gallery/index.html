@@ -4,13 +4,14 @@ main-title: "ANISH SARKAR"
 subtitle: "Proof School Senior"
 description: "photography and more"
 images:
- - image_path: /img/slider/render.png
-   gallery-folder: /img/slider/
- - image_path: /img/slider/fold.jpg
-   gallery-folder: /img/slider/
- - image_path: /img/slider/stairs.jpg
-   gallery-folder: /img/slider/
+ - image_path: /gallery/Kusudamas/Electra_24.jpg
+   gallery-folder: /gallery/Kusudamas/
+ - image_path: /gallery/Mix/20241117014.jpg
+   gallery-folder: /img/Mix/
+ - image_path: /gallery/Polyhedron/20240929061.jpg
+   gallery-folder: /gallery/Polyhedron/
 ---
+
 
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -84,12 +85,11 @@ images:
             
             <div class="gallery fullscreen-gallery kenburns-gallery">
                 <canvas id="kenburns"></canvas>
-                {% for image in page.images %}  	
+                {% assign random_images = site.static_files | where: "image", true | sample: 5 %}
+                {% for image in random_images %}
                 <figure class="gallery-item">
                     <header class='gallery-icon'>
-                        <a href="{{ site.url }}{{ site.baseurl }}{{ image.gallery-folder }}">
-                            <img src="{{ site.url }}{{ site.baseurl }}{{ image.image_path }}">
-                        </a>
+                        <img src="{{ site.baseurl }}{{ image.path }}">
                     </header>	
                 </figure>
                 {% endfor %}
@@ -100,7 +100,27 @@ images:
     <!-- Catalogs Section -->
     <section id="catalogs" class="catalogs-section">
         <div class="wrapper">
-            <div id="catalog-container"></div>
+            {% assign albums = site.static_files | where: "image", true | group_by_exp: "item", "item.path | split: '/' | slice: 1 | first" %}
+            {% for catalog in albums %}
+            {% unless catalog.name contains 'slider' %}
+            <div class="catalog-section">
+                <h2 class="catalog-title">{{ catalog.name | replace: '_', ' ' | capitalize }}</h2>
+                <div class="mason-gallery">
+                    {% assign catalog_albums = catalog.items | group_by_exp: "item", "item.path | split: '/' | slice: 2 | first" %}
+                    {% for album in catalog_albums %}
+                    {% assign album_images = album.items | where: "extname", ".jpg" | where: "extname", ".png" %}
+                    {% assign thumbnail = album_images | first %}
+                    <div class="album-card">
+                        <a href="{{ site.baseurl }}/{{ catalog.name }}/{{ album.name }}">
+                            <img src="{{ site.baseurl }}{{ thumbnail.path }}" alt="{{ album.name | replace: '_', ' ' }}">
+                            <div class="album-title">{{ album.name | replace: '_', ' ' }}</div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endunless %}
+            {% endfor %}
         </div>
     </section>
 
@@ -113,69 +133,8 @@ images:
     <script src="{{ site.baseurl }}/js/kenburns.min.js"></script>
     
     <script>
-        // Function to load and organize albums
-        async function loadAlbums() {
-            try {
-                // Fetch all directories
-                const response = await fetch('/api/get-directories');
-                const directories = await response.json();
-                
-                // Organize albums by catalog
-                const catalogs = {};
-                
-                directories.forEach(dir => {
-                    // Extract catalog name from directory name (format: catalog_name_album_name)
-                    const match = dir.name.match(/^([^_]+)_/);
-                    if (match) {
-                        const catalogName = match[1];
-                        if (!catalogs[catalogName]) {
-                            catalogs[catalogName] = [];
-                        }
-                        catalogs[catalogName].push({
-                            name: dir.name.replace(`${catalogName}_`, '').replace(/_/g, ' '),
-                            path: dir.path,
-                            thumbnail: `${dir.path}/thumbnail.jpg` // Assuming each album has a thumbnail.jpg
-                        });
-                    }
-                });
-                
-                // Create HTML for each catalog
-                const container = document.getElementById('catalog-container');
-                
-                Object.entries(catalogs).forEach(([catalogName, albums]) => {
-                    const catalogSection = document.createElement('div');
-                    catalogSection.className = 'catalog-section';
-                    
-                    const title = document.createElement('h2');
-                    title.className = 'catalog-title';
-                    title.textContent = catalogName.charAt(0).toUpperCase() + catalogName.slice(1);
-                    
-                    const gallery = document.createElement('div');
-                    gallery.className = 'mason-gallery';
-                    
-                    albums.forEach(album => {
-                        gallery.innerHTML += `
-                            <div class="album-card">
-                                <a href="${album.path}">
-                                    <img src="${album.thumbnail}" alt="${album.name}">
-                                    <div class="album-title">${album.name}</div>
-                                </a>
-                            </div>
-                        `;
-                    });
-                    
-                    catalogSection.appendChild(title);
-                    catalogSection.appendChild(gallery);
-                    container.appendChild(catalogSection);
-                });
-            } catch (error) {
-                console.error('Error loading albums:', error);
-            }
-        }
-
-        // Initialize the page
+        // Initialize the slideshow
         document.addEventListener('DOMContentLoaded', () => {
-            // Initialize the slideshow
             if (document.getElementById('kenburns')) {
                 const kenburns = new KenBurns({
                     images: Array.from(document.querySelectorAll('.gallery-item img')).map(img => img.src),
@@ -184,9 +143,6 @@ images:
                     scale: 1.1
                 });
             }
-            
-            // Load the albums
-            loadAlbums();
         });
     </script>
 </body>
