@@ -6,7 +6,7 @@ description: "photography / papercraft / biomed / digital fabrication & modeling
 images:
 - image_path: /gallery/Kusudamas/Electra 24.jpg
   gallery-folder: /gallery/Kusudamas/
-  header-img: "img/paper-about.jpg"
+  about_path: "img/paper-about.jpg"
 
 ---
 
@@ -78,7 +78,7 @@ images:
         }
 
         .text-box.box1:hover {
-            background-image: url('{{ site.baseurl }}/img/paper-about.jpg"');
+            background-image: url('{{ site.baseurl }}{{ image.about_path }}"');
             background-size: cover;
             background-position: center;
         }
