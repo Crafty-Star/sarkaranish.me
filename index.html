@@ -2,16 +2,11 @@
 layout: home
 main-title: "ANISH SARKAR"
 subtitle: "Proof School Senior"
-description: "photography / papercraft / biomed / 
-                mechanical engineering"
+description: "photography / papercraft / biomed / digital fabrication & modeling"
 about_path: "/img/about-self.jpg"
 images:
-- image_path: /img/slider/render.png
-  gallery-folder: /img/slider/
-- image_path: /img/slider/fold.jpg
-  gallery-folder: /img/slider/
-- image_path: /img/slider/stairs.jpg
-  gallery-folder: /img/slider/
+- image_path: /gallery/Kusudamas/Electra_24.jpg
+  gallery-folder: /gallery/Kusudamas
 ---
 
 <!DOCTYPE html>
@@ -19,16 +14,6 @@ images:
 <head>
     <meta content="charset=utf-8">
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
-    <!-- External CSS imports for styling -->
-	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="{{ site.baseurl }}/css/main.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="{{ site.baseurl }}/css/galleries.css" media="screen" />
-	<link rel="stylesheet" href="{{ site.baseurl }}/css/WYSIWYG.css" media="screen" />
-
-	<!-- Modernizr for browser compatibility -->
-	<script src="{{ site.baseurl }}/js/modernizr.js"></script>
-    
     <style>
         * {
             margin: 0;
@@ -48,7 +33,6 @@ images:
             position: relative;
             overflow: hidden;
             background: transparent;
-            margin-bottom: 50px;
         }
 
         .gallery.kenburns-gallery {
@@ -57,15 +41,11 @@ images:
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 1;
         }
 
         #kenburns {
             width: 100%;
             height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
         }
 
         .position-absolute {
@@ -107,7 +87,7 @@ images:
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             position: relative;
             overflow: hidden;
@@ -135,7 +115,7 @@ images:
             background-size: cover;
             background-position: center;
             opacity: 0;
-            transition: opacity 0.8s ease;
+            transition: opacity 0.4s ease;
         }
 
         .text-box:hover::before {
@@ -149,15 +129,15 @@ images:
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
-        .box1::after {
-            background-image: url('{{ site.baseurl }}about_path ');
+        .box1::before {
+            background-image: url('{{ site.baseurl }}{{ about_path }}');
         }
 
-        .box2::after {
+        .box2::before {
             background-image: url('{{ site.baseurl }}/gallery/Lightbox/20240416-7.jpg');
         }
 
-        .box3::after {
+        .box3::before {
             background-image: url('{{ site.baseurl }}/gallery/Projects/project-cover.jpg');
         }
 
@@ -174,19 +154,26 @@ images:
     </style>
 </head>
 <body class="fullscreen">
-    <!-- Main content section -->
-	<section id="content" role="main">
-		<div class="wrapper">
-			<!-- Title and description section -->
-			<div class="position-absolute">
-				<h2 class="big no-margin"><strong>{{ page.main-title }}</strong></h2>
-				<h2>{{ page.subtitle }}</h2> 
-				<div class="entry-summary">
-					<p>{{ page.description }}</p>
-				</div><br />
-			</div>
+    <section id="content" role="main">
+        <div class="gallery-section">
+            <div class="position-absolute">
+                <h2 class="big"><strong>{{ page.main-title }}</strong></h2>
+                <h2>{{ page.subtitle }}</h2>
+                <div class="entry-summary">
+                    <p>{{ page.description }}</p>
+                </div>
+            </div>
 
-            
+            <div class="gallery kenburns-gallery">
+                <canvas id="kenburns"></canvas>
+                {% for image in page.images %}
+                <figure class="gallery-item">
+                    <header class='gallery-icon'>
+                        <img src="{{ site.url }}{{ site.baseurl }}{{ image.image_path }}">
+                    </header>    
+                </figure>
+                {% endfor %}
+            </div>
         </div>
 
         <div class="text-boxes-container">
@@ -213,7 +200,6 @@ images:
 <script src="{{ site.baseurl }}/js/kenburns.min.js"></script>
 <script src="{{ site.baseurl }}/js/jquery.lazylinepainter.min.js"></script>
 <script src="{{ site.baseurl }}/js/scripts.js"></script>
-
 
 </body>
 </html>
