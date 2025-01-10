@@ -1,15 +1,17 @@
 ---
 layout: home
-main-title: "Gallery"
-subtitle: "papercraft, portraits, landscapes, and more"
-description: ""
+main-title: "ANISH SARKAR"
+subtitle: "Proof School Senior"
+description: "photography / papercraft / biomed / mechanical engineering"
 images:
 - image_path: /gallery/papercraft/20250105_kusudamas/20250105_kusudamas_007.jpg
-  gallery-folder: /gallery/papercraft/20250105_kusudamas/
-- image_path: /gallery/papercraft/20250105_mix/20250105_mix_002.jpg
-  gallery-folder: /gallery/papercraft/20250105_mix/20250105_mix_002.jpg
-- image_path: /gallery/papercraft/20250105_tesselations/20250105_tesselatons_003.jpg
-  gallery-folder: /gallery/papercraft/20250105_tesselations/
+  gallery-folder: /gallery/papercraft/20250105_kusudamas
+- image_path: /img/slider/render.png
+  gallery-folder: /img/slider/
+- image_path: /img/slider/fold.jpg
+  gallery-folder: /img/slider/
+- image_path: /img/slider/stairs.jpg
+  gallery-folder: /img/slider/
 ---
 
 
@@ -17,132 +19,191 @@ images:
 <html class="no-js" lang="en">
 <head>
     <meta content="charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ site.baseurl }}/css/main.css">
-    <link rel="stylesheet" href="{{ site.baseurl }}/css/galleries.css">
-    <link rel="stylesheet" href="{{ site.baseurl }}/css/WYSIWYG.css">
-    
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <style>
-        .catalog-section {
-            margin: 50px 0;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        
-        .catalog-title {
+
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .hero-section {
+            height: 100vh;
             width: 100%;
-            text-align: center;
-            font-size: 2em;
-            margin: 30px 0;
-            border-bottom: 2px solid #333;
-            padding-bottom: 10px;
+            position: relative;
+            overflow: hidden;
         }
-        
-        .mason-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 20px;
+
+        .gallery.kenburns-gallery {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
-        
-        .album-card {
+
+        #kenburns {
+            width: 100%;
+            height: 100%;
+        }
+
+        .hero-content {
+            position: absolute;
+            bottom: 60px;
+            right: 60px;
+            z-index: 2;
+            text-align: right;
+            color: rgb(235, 235, 235);
+            max-width: 600px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 32px;
+            border-radius: 8px;
+            backdrop-filter: blur(8px);
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .hero-content h2 {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .content-section {
+            min-height: 100vh;
+            background-color: rgb(109, 108, 108);
+            padding: 80px 40px;
+        }
+
+        .text-boxes-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .text-box {
+            width: 80%;
+            height: 200px;
+            padding: 30px;
+            background-color: rgb(187, 187, 187);
+            color: #323232;
+            font-size: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
             position: relative;
             overflow: hidden;
             border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-decoration: none;
         }
-        
-        .album-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
+
+        .text-box:nth-child(1) { align-self: flex-start; }
+        .text-box:nth-child(2) { align-self: center; }
+        .text-box:nth-child(3) { align-self: flex-end; }
+
+        .text-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
-        
-        .album-title {
+
+        .text-box::before {
+            content: '';
             position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
             bottom: 0;
-            width: 100%;
-            padding: 10px;
-            background: rgba(0,0,0,0.7);
-            color: white;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .text-box:hover::before {
+            opacity: 0.2;
+        }
+
+        .text-box span {
+            position: relative;
+            z-index: 1;
+            font-weight: bold;
+        }
+
+        .box1::before {
+            background-image: url('{{ site.baseurl }}/img/about-self.jpg');
+        }
+
+        .box2::before {
+            background-image: url('{{ site.baseurl }}/gallery/papercraft/20250105_kusudamas/20250105_kusudamas_007.jpg');
+        }
+
+        .box3::before {
+            background-image: url('{{ site.baseurl }}/img/lost.png');
         }
     </style>
-    
-    <script src="{{ site.baseurl }}/js/modernizr.js"></script>
 </head>
-
 <body>
-    <!-- Top Slideshow Section -->
-    <section class="slideshow-section" style="height: 100vh;">
-        <div class="wrapper">
-            <div class="position-absolute">
-                <h2 class="big no-margin"><strong>{{ page.main-title }}</strong></h2>
-                <h2>{{ page.subtitle }}</h2> 
-                <div class="entry-summary">
-                    <p>{{ page.description }}</p>
-                </div>
-            </div>
-            
-            <div class="gallery fullscreen-gallery kenburns-gallery">
-                <canvas id="kenburns"></canvas>
-                {% for image in page.images %}
-                    <figure class="gallery-item">
-                        <header class='gallery-icon'>
+    <section class="hero-section">
+        <div class="gallery kenburns-gallery">
+            <canvas id="kenburns"></canvas>
+            {% for image in page.images %}
+            <figure class="gallery-item">
+                <header class='gallery-icon'>
                     <img src="{{ site.url }}{{ site.baseurl }}{{ image.image_path }}">
                 </header>    
             </figure>
             {% endfor %}
-            </div>
+        </div>
+        
+        <div class="hero-content">
+            <h1>{{ page.main-title }}</h1>
+            <h2>{{ page.subtitle }}</h2>
+            <p>{{ page.description }}</p>
         </div>
     </section>
 
-    <!-- Catalogs Section -->
-    <section id="catalogs" class="catalogs-section">
-        <div class="wrapper">
-            {% assign albums = site.static_files | where: "image", true | group_by_exp: "item", "item.path | split: '/' | slice: 1 | first" %}
-            {% for catalog in albums %}
-            {% unless catalog.name contains 'slider' %}
-            <div class="catalog-section">
-                <h2 class="catalog-title">{{ catalog.name | replace: '_', ' ' | capitalize }}</h2>
-                <div class="mason-gallery">
-                    {% assign catalog_albums = catalog.items | group_by_exp: "item", "item.path | split: '/' | slice: 2 | first" %}
-                    {% for album in catalog_albums %}
-                    {% assign album_images = album.items | where: "extname", ".jpg" | where: "extname", ".png" %}
-                    {% assign thumbnail = album_images | first %}
-                    <div class="album-card">
-                        <a href="{{ site.baseurl }}/{{ catalog.name }}/{{ album.name }}">
-                            <img src="{{ site.baseurl }}{{ thumbnail.path }}" alt="{{ album.name | replace: '_', ' ' }}">
-                            <div class="album-title">{{ album.name | replace: '_', ' ' }}</div>
-                        </a>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            {% endunless %}
-            {% endfor %}
+    <section class="content-section">
+        <div class="text-boxes-wrapper">
+            <a href="/about" class="text-box box1">
+                <span>Who is Anish?</span>
+            </a>
+            <a href="/gallery" class="text-box box2">
+                <span>My Photos</span>
+            </a>
+            <a href="/projects" class="text-box box3">
+                <span>Projects I've done</span>
+            </a>
         </div>
     </section>
 
-    <!-- Scripts -->
+    <!-- SCRIPTS SECTION -->
     <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="{{ site.baseurl }}/js/retina.min.js"></script>
     <script src="{{ site.baseurl }}/js/jquery.mousewheel.min.js"></script>
     <script src="{{ site.baseurl }}/js/jquery.cycle.min.js"></script>
     <script src="{{ site.baseurl }}/js/kenburns.min.js"></script>
-    
-    <script>
-        // Initialize the slideshow
-        document.addEventListener('DOMContentLoaded', () => {
-            if (document.getElementById('kenburns')) {
-                const kenburns = new KenBurns({
-                    images: Array.from(document.querySelectorAll('.gallery-item img')).map(img => img.src),
-                    duration: 6000,
-                    fadeDelay: 3000,
-                    scale: 1.1
-                });
-            }
-        });
-    </script>
+    <script src="{{ site.baseurl }}/js/jquery.lazylinepainter.min.js"></script>
+    <script src="{{ site.baseurl }}/js/scripts.js"></script>
 </body>
 </html>
