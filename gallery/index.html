@@ -66,6 +66,36 @@ images:
             background: rgba(0,0,0,0.7);
             color: white;
         }
+        
+        .slideshow-section {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .kenburns-gallery {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        #kenburns {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .position-absolute {
+            position: relative;
+            z-index: 2;
+            padding: 2rem;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
     </style>
     
     <script src="{{ site.baseurl }}/js/modernizr.js"></script>
@@ -100,20 +130,18 @@ images:
     <!-- Catalogs Section -->
     <section id="catalogs" class="catalogs-section">
         <div class="wrapper">
-            {% assign albums = site.static_files | where: "image", true | group_by_exp: "item", "item.path | split: '/' | slice: 1 | first" %}
+            {% assign albums = site.static_files | where: "image", true | group_by_exp: "item", "item.path | split: '/' | slice: 2 | first" %}
             {% for catalog in albums %}
-            {% unless catalog.name contains 'slider' %}
+            {% unless catalog.name == nil or catalog.name == "" or catalog.name contains 'slider' %}
             <div class="catalog-section">
                 <h2 class="catalog-title">{{ catalog.name | replace: '_', ' ' | capitalize }}</h2>
                 <div class="mason-gallery">
-                    {% assign catalog_albums = catalog.items | group_by_exp: "item", "item.path | split: '/' | slice: 2 | first" %}
-                    {% for album in catalog_albums %}
-                    {% assign album_images = album.items | where: "extname", ".jpg" | where: "extname", ".png" %}
-                    {% assign thumbnail = album_images | first %}
+                    {% assign catalog_images = catalog.items | where_exp: "item", "item.path contains '.jpg' or item.path contains '.png'" %}
+                    {% for image in catalog_images limit:1 %}
                     <div class="album-card">
-                        <a href="{{ site.baseurl }}/{{ catalog.name }}/{{ album.name }}">
-                            <img src="{{ site.baseurl }}{{ thumbnail.path }}" alt="{{ album.name | replace: '_', ' ' }}">
-                            <div class="album-title">{{ album.name | replace: '_', ' ' }}</div>
+                        <a href="{{ site.baseurl }}/{{ catalog.name }}">
+                            <img src="{{ site.baseurl }}{{ image.path }}" alt="{{ catalog.name | replace: '_', ' ' }}">
+                            <div class="album-title">{{ catalog.name | replace: '_', ' ' }}</div>
                         </a>
                     </div>
                     {% endfor %}
@@ -135,13 +163,21 @@ images:
     <script>
         // Initialize the slideshow
         document.addEventListener('DOMContentLoaded', () => {
-            if (document.getElementById('kenburns')) {
-                const kenburns = new KenBurns({
-                    images: Array.from(document.querySelectorAll('.gallery-item img')).map(img => img.src),
-                    duration: 6000,
-                    fadeDelay: 3000,
-                    scale: 1.1
-                });
+            const kenburnsCanvas = document.getElementById('kenburns');
+            if (kenburnsCanvas) {
+                const images = Array.from(document.querySelectorAll('.gallery-item img')).map(img => img.src);
+                if (images.length > 0) {
+                    kenburnsCanvas.width = window.innerWidth;
+                    kenburnsCanvas.height = window.innerHeight;
+                    
+                    new KenBurns({
+                        images: images,
+                        duration: 6000,
+                        fadeDelay: 3000,
+                        scale: 1.1,
+                        canvas: kenburnsCanvas
+                    });
+                }
             }
         });
     </script>
