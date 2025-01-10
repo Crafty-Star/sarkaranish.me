@@ -19,48 +19,19 @@ catalogs:
   folder: /gallery/Out there/
 ---
 
+
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta content="charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/main.css">
-    <link rel="stylesheet" href="/css/galleries.css">
-    <link rel="stylesheet" href="/css/WYSIWYG.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/main.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/galleries.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/WYSIWYG.css">
     
     <style>
-        .slideshow-section {
-            position: relative;
-            height: 100vh;
-            overflow: hidden;
-        }
-        
-        .position-absolute {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 2;
-            text-align: center;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-        
-        .gallery {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        
-        #kenburns {
-            width: 100%;
-            height: 100%;
-        }
-        
         .catalog-section {
             margin: 50px 0;
         }
@@ -86,11 +57,6 @@ catalogs:
             overflow: hidden;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-        }
-        
-        .album-card:hover {
-            transform: scale(1.05);
         }
         
         .album-card img {
@@ -106,13 +72,15 @@ catalogs:
             padding: 10px;
             background: rgba(0,0,0,0.7);
             color: white;
-            text-align: center;
         }
     </style>
+    
+    <script src="{{ site.baseurl }}/js/modernizr.js"></script>
 </head>
 
 <body>
-    <section class="slideshow-section">
+    <!-- Top Slideshow Section -->
+    <section class="slideshow-section" style="height: 100vh;">
         <div class="wrapper">
             <div class="position-absolute">
                 <h2 class="big no-margin"><strong>{{ page.main-title }}</strong></h2>
@@ -124,69 +92,66 @@ catalogs:
             
             <div class="gallery fullscreen-gallery kenburns-gallery">
                 <canvas id="kenburns"></canvas>
+                {% for image in page.images %}
+                    <figure class="gallery-item">
+                        <header class='gallery-icon'>
+                    <img src="{{ site.url }}{{ site.baseurl }}{{ image.image_path }}">
+                </header>    
+            </figure>
+            {% endfor %}
             </div>
         </div>
     </section>
 
+    <!-- Catalogs Section -->
     <section id="catalogs" class="catalogs-section">
         <div class="wrapper">
             {% for catalog in page.catalogs %}
             <div class="catalog-section">
                 <h2 class="catalog-title">{{ catalog.name | capitalize }}</h2>
-                <div class="mason-gallery" id="{{ catalog.name | slugify }}">
-                    <!-- Gallery items will be populated via JavaScript -->
+                <div class="mason-gallery">
+                    {% assign catalog_path = catalog.folder | remove_first: '/' %}
+                    {% assign albums = site.static_files | where_exp: "file", "file.path contains catalog_path" | group_by_exp: "file", "file.path | split: catalog_path | last | split: '/' | slice: 1 | first" %}
+                    
+                    {% for album in albums %}
+                    {% unless album.name == nil or album.name == "" %}
+                    {% assign album_images = album.items | where_exp: "item", "item.path contains '.jpg' or item.path contains '.png'" %}
+                    {% if album_images.size > 0 %}
+                    {% assign thumbnail = album_images | first %}
+                    <div class="album-card">
+                        <a href="{{ site.baseurl }}{{ catalog.folder }}{{ album.name }}">
+                            <img src="{{ site.baseurl }}{{ thumbnail.path }}" alt="{{ album.name | replace: '_', ' ' }}">
+                            <div class="album-title">{{ album.name | replace: '_', ' ' | capitalize }}</div>
+                        </a>
+                    </div>
+                    {% endif %}
+                    {% endunless %}
+                    {% endfor %}
                 </div>
             </div>
             {% endfor %}
         </div>
     </section>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="/js/kenburns.min.js"></script>
+    <!-- Scripts -->
+    <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{{ site.baseurl }}/js/retina.min.js"></script>
+    <script src="{{ site.baseurl }}/js/jquery.mousewheel.min.js"></script>
+    <script src="{{ site.baseurl }}/js/jquery.cycle.min.js"></script>
+    <script src="{{ site.baseurl }}/js/kenburns.min.js"></script>
     
     <script>
+        // Initialize the slideshow
         document.addEventListener('DOMContentLoaded', () => {
-            // Initialize KenBurns slideshow
-            const images = [
-                {% for image in page.images %}
-                    "{{ image.image_path }}",
-                {% endfor %}
-            ];
-            
             if (document.getElementById('kenburns')) {
                 const kenburns = new KenBurns({
-                    images: images,
+                    images: Array.from(document.querySelectorAll('.gallery-item img')).map(img => img.src),
                     duration: 6000,
                     fadeDelay: 3000,
                     scale: 1.1
                 });
             }
-            
-            // Load gallery images
-            {% for catalog in page.catalogs %}
-            fetch('{{ catalog.folder }}')
-                .then(response => response.text())
-                .then(data => {
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(data, 'text/html');
-                    const images = Array.from(doc.querySelectorAll('img'));
-                    const gallery = document.getElementById('{{ catalog.name | slugify }}');
-                    
-                    images.forEach(img => {
-                        const card = document.createElement('div');
-                        card.className = 'album-card';
-                        card.innerHTML = `
-                            <a href="${img.parentElement.href || '#'}">
-                                <img src="${img.src}" alt="${img.alt || 'Gallery image'}">
-                                <div class="album-title">${img.alt || 'Untitled'}</div>
-                            </a>
-                        `;
-                        gallery.appendChild(card);
-                    });
-                })
-                .catch(error => console.error('Error loading gallery:', error));
-            {% endfor %}
         });
     </script>
 </body>
