@@ -1,104 +1,148 @@
 ---
-layout: page
-title: "Gallery"
-description: "A collection of papercraft, portraits, landscapes, and more"
-header-img: "img/lost.png"
+layout: home
+main-title: "Gallery"
+subtitle: "papercraft, portraits, landscapes, and more"
+description: ""
+images:
+- image_path: /gallery/papercraft/20250105_kusudamas/20250105_kusudamas_007.jpg
+  gallery-folder: /gallery/papercraft/20250105_kusudamas/
+- image_path: /gallery/papercraft/20250105_mix/20250105_mix_002.jpg
+  gallery-folder: /gallery/papercraft/20250105_mix/20250105_mix_002.jpg
+- image_path: /gallery/papercraft/20250105_tesselations/20250105_tesselatons_003.jpg
+  gallery-folder: /gallery/papercraft/20250105_tesselations/
 ---
 
-<style>
-.catalog-section {
-    margin: 2em 0;
-}
 
-.catalog-title {
-    text-align: left;
-    margin: 1em 0;
-    padding-bottom: 0.5em;
-    border-bottom: 2px solid #eee;
-}
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+    <meta content="charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/main.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/galleries.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/css/WYSIWYG.css">
+    
+    <style>
+        .catalog-section {
+            margin: 50px 0;
+        }
+        
+        .catalog-title {
+            width: 100%;
+            text-align: center;
+            font-size: 2em;
+            margin: 30px 0;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+        
+        .mason-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .album-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .album-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .album-title {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+        }
+    </style>
+    
+    <script src="{{ site.baseurl }}/js/modernizr.js"></script>
+</head>
 
-.albums-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    padding: 1em 0;
-}
-
-.album-item {
-    text-align: center;
-}
-
-.album-item img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 8px;
-    transition: transform 0.2s;
-}
-
-.album-item:hover img {
-    transform: scale(1.05);
-}
-
-.album-title {
-    margin-top: 0.5em;
-    font-size: 1.1em;
-    color: #333;
-    text-decoration: none;
-}
-
-.album-link {
-    text-decoration: none;
-}
-</style>
-
-<!-- Papercraft Section -->
-<div class="catalog-section">
-    <h2 class="catalog-title">Papercraft</h2>
-    <div class="albums-grid">
-        <a href="/gallery/papercraft/20250105_kusudamas/" class="album-link">
-            <div class="album-item">
-                <img src="/gallery/papercraft/20250105_kusudamas/20250105_kusudamas_007.jpg" alt="Kusudamas">
-                <div class="album-title">Kusudamas</div>
+<body>
+    <!-- Top Slideshow Section -->
+    <section class="slideshow-section" style="height: 100vh;">
+        <div class="wrapper">
+            <div class="position-absolute">
+                <h2 class="big no-margin"><strong>{{ page.main-title }}</strong></h2>
+                <h2>{{ page.subtitle }}</h2> 
+                <div class="entry-summary">
+                    <p>{{ page.description }}</p>
+                </div>
             </div>
-        </a>
-        <a href="/gallery/papercraft/20250105_mix/" class="album-link">
-            <div class="album-item">
-                <img src="/gallery/papercraft/20250105_mix/20250105_mix_002.jpg" alt="Mix">
-                <div class="album-title">Mix</div>
+            
+            <div class="gallery fullscreen-gallery kenburns-gallery">
+                <canvas id="kenburns"></canvas>
+                {% for image in page.images %}
+                    <figure class="gallery-item">
+                        <header class='gallery-icon'>
+                    <img src="{{ site.url }}{{ site.baseurl }}{{ image.image_path }}">
+                </header>    
+            </figure>
+            {% endfor %}
             </div>
-        </a>
-        <a href="/gallery/papercraft/20250105_tesselations/" class="album-link">
-            <div class="album-item">
-                <img src="/gallery/papercraft/20250105_tesselations/20250105_tesselatons_003.jpg" alt="Tesselations">
-                <div class="album-title">Tesselations</div>
-            </div>
-        </a>
-    </div>
-</div>
+        </div>
+    </section>
 
-<!-- Portraits Section -->
-<div class="catalog-section">
-    <h2 class="catalog-title">Portraits</h2>
-    <div class="albums-grid">
-        <a href="/gallery/portraits/20250109_portraits001/" class="album-link">
-            <div class="album-item">
-                <img src="/gallery/portraits/20250109_portraits001/20250109_portraits001_001.jpg" alt="Portraits 2025">
-                <div class="album-title">Portraits 2025</div>
+    <!-- Catalogs Section -->
+    <section id="catalogs" class="catalogs-section">
+        <div class="wrapper">
+            {% assign albums = site.static_files | where: "image", true | group_by_exp: "item", "item.path | split: '/' | slice: 1 | first" %}
+            {% for catalog in albums %}
+            {% unless catalog.name contains 'slider' %}
+            <div class="catalog-section">
+                <h2 class="catalog-title">{{ catalog.name | replace: '_', ' ' | capitalize }}</h2>
+                <div class="mason-gallery">
+                    {% assign catalog_albums = catalog.items | group_by_exp: "item", "item.path | split: '/' | slice: 2 | first" %}
+                    {% for album in catalog_albums %}
+                    {% assign album_images = album.items | where: "extname", ".jpg" | where: "extname", ".png" %}
+                    {% assign thumbnail = album_images | first %}
+                    <div class="album-card">
+                        <a href="{{ site.baseurl }}/{{ catalog.name }}/{{ album.name }}">
+                            <img src="{{ site.baseurl }}{{ thumbnail.path }}" alt="{{ album.name | replace: '_', ' ' }}">
+                            <div class="album-title">{{ album.name | replace: '_', ' ' }}</div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
-        </a>
-    </div>
-</div>
+            {% endunless %}
+            {% endfor %}
+        </div>
+    </section>
 
-<!-- Out There Section -->
-<div class="catalog-section">
-    <h2 class="catalog-title">Out There</h2>
-    <div class="albums-grid">
-        <a href="/gallery/out-there/20250105_landscapes/" class="album-link">
-            <div class="album-item">
-                <img src="/gallery/out-there/20250105_landscapes/20250105_landscapes_001.jpg" alt="Landscapes">
-                <div class="album-title">Landscapes</div>
-            </div>
-        </a>
-    </div>
-</div>
+    <!-- Scripts -->
+    <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{{ site.baseurl }}/js/retina.min.js"></script>
+    <script src="{{ site.baseurl }}/js/jquery.mousewheel.min.js"></script>
+    <script src="{{ site.baseurl }}/js/jquery.cycle.min.js"></script>
+    <script src="{{ site.baseurl }}/js/kenburns.min.js"></script>
+    
+    <script>
+        // Initialize the slideshow
+        document.addEventListener('DOMContentLoaded', () => {
+            if (document.getElementById('kenburns')) {
+                const kenburns = new KenBurns({
+                    images: Array.from(document.querySelectorAll('.gallery-item img')).map(img => img.src),
+                    duration: 6000,
+                    fadeDelay: 3000,
+                    scale: 1.1
+                });
+            }
+        });
+    </script>
+</body>
+</html>
