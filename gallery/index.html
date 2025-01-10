@@ -1,110 +1,104 @@
 ---
 layout: page
 title: "Gallery"
-description: "A collection of my creative works"
+description: "A collection of papercraft, portraits, landscapes, and more"
 header-img: "img/lost.png"
 ---
 
-<div class="wrapper">
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <h1>{{ page.title }}</h1>
-            <p class="lead">{{ page.description }}</p>
-        </div>
-    </div>
-
-    {% assign catalogs = site.static_files | where_exp: "file", "file.path contains '/gallery/'" | group_by_exp: "file", "file.path | split: '/' | slice: 2 | first" %}
-    
-    {% for catalog in catalogs %}
-    {% unless catalog.name == "" or catalog.name contains "." %}
-    <div class="catalog-section">
-        <h2 class="catalog-title">{{ catalog.name | capitalize }}</h2>
-        <div class="masonry-gallery gallery">
-            {% assign albums = site.static_files | where_exp: "file", "file.path contains '/gallery/'" | where_exp: "file", "file.path contains catalog.name" | group_by_exp: "file", "file.path | split: '/' | slice: 3 | first" %}
-            
-            {% for album in albums %}
-            {% unless album.name == "" or album.name contains "." %}
-            {% assign first_image = site.static_files | where_exp: "file", "file.path contains album.name" | where_exp: "file", "file.path contains '.jpg' or file.path contains '.png'" | first %}
-            {% if first_image %}
-            <div class="gallery-item col-3">
-                <div class="gallery-icon">
-                    <a href="{{ site.baseurl }}/gallery/{{ catalog.name }}/{{ album.name }}/">
-                        <img src="{{ site.baseurl }}{{ first_image.path }}" alt="{{ album.name | replace: '_', ' ' | capitalize }}">
-                    </a>
-                </div>
-                <figcaption class="gallery-caption">
-                    <div class="entry-summary">
-                        <h3>{{ album.name | replace: '_', ' ' | capitalize }}</h3>
-                    </div>
-                </figcaption>
-            </div>
-            {% endif %}
-            {% endunless %}
-            {% endfor %}
-        </div>
-    </div>
-    {% endunless %}
-    {% endfor %}
-</div>
-
-<!-- jQuery -->    
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<!-- Masonry -->
-<script src="{{ site.baseurl }}/js/isotope.pkgd.min.js"></script>
-<!-- Initialize masonry -->
-<script>
-$(window).load(function() {
-    $('.masonry-gallery').each(function() {
-        $(this).isotope({
-            itemSelector: '.gallery-item',
-            masonry: {
-                columnWidth: '.gallery-item'
-            }
-        });
-    });
-});
-</script>
-
 <style>
 .catalog-section {
-    margin-bottom: 4em;
+    margin: 2em 0;
 }
 
 .catalog-title {
     text-align: left;
-    margin: 2em 0 1em;
+    margin: 1em 0;
     padding-bottom: 0.5em;
     border-bottom: 2px solid #eee;
 }
 
-.gallery-caption {
-    background: rgba(0,0,0,0.5);
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 1em;
-    color: white;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+.albums-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 1em 0;
 }
 
-.gallery-item:hover .gallery-caption {
-    opacity: 1;
+.album-item {
+    text-align: center;
 }
 
-.gallery-caption h3 {
-    margin: 0;
-    color: white;
-}
-
-.masonry-gallery .gallery-item {
-    margin-bottom: 2em;
-}
-
-.gallery-icon img {
+.album-item img {
     width: 100%;
-    height: auto;
-    display: block;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+
+.album-item:hover img {
+    transform: scale(1.05);
+}
+
+.album-title {
+    margin-top: 0.5em;
+    font-size: 1.1em;
+    color: #333;
+    text-decoration: none;
+}
+
+.album-link {
+    text-decoration: none;
 }
 </style>
+
+<!-- Papercraft Section -->
+<div class="catalog-section">
+    <h2 class="catalog-title">Papercraft</h2>
+    <div class="albums-grid">
+        <a href="/gallery/papercraft/20250105_kusudamas/" class="album-link">
+            <div class="album-item">
+                <img src="/gallery/papercraft/20250105_kusudamas/20250105_kusudamas_007.jpg" alt="Kusudamas">
+                <div class="album-title">Kusudamas</div>
+            </div>
+        </a>
+        <a href="/gallery/papercraft/20250105_mix/" class="album-link">
+            <div class="album-item">
+                <img src="/gallery/papercraft/20250105_mix/20250105_mix_002.jpg" alt="Mix">
+                <div class="album-title">Mix</div>
+            </div>
+        </a>
+        <a href="/gallery/papercraft/20250105_tesselations/" class="album-link">
+            <div class="album-item">
+                <img src="/gallery/papercraft/20250105_tesselations/20250105_tesselatons_003.jpg" alt="Tesselations">
+                <div class="album-title">Tesselations</div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!-- Portraits Section -->
+<div class="catalog-section">
+    <h2 class="catalog-title">Portraits</h2>
+    <div class="albums-grid">
+        <a href="/gallery/portraits/20250109_portraits001/" class="album-link">
+            <div class="album-item">
+                <img src="/gallery/portraits/20250109_portraits001/20250109_portraits001_001.jpg" alt="Portraits 2025">
+                <div class="album-title">Portraits 2025</div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!-- Out There Section -->
+<div class="catalog-section">
+    <h2 class="catalog-title">Out There</h2>
+    <div class="albums-grid">
+        <a href="/gallery/Out there/20250105_landscapes/" class="album-link">
+            <div class="album-item">
+                <img src="/gallery/Out there/20250105_landscapes/20250105_landscapes_001.jpg" alt="Landscapes">
+                <div class="album-title">Landscapes</div>
+            </div>
+        </a>
+    </div>
+</div>
