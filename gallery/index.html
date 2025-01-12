@@ -1,90 +1,134 @@
 ---
-layout: page
-title: "Gallery"
-description: "A collection of artworks, crafts, and creative explorations"
+layout: home
+title: "Art Gallery"
+description: "A collection of artwork spanning various mediums and styles"
 ---
 
-<!-- Gallery page styles -->
+<!-- Main title and description section -->
+<div class="gallery-header text-center">
+    <h1>{{ page.title }}</h1>
+    <p class="lead">{{ page.description }}</p>
+</div>
+
+<!-- Papercraft Section -->
+<section class="catalog-section">
+    <h2 class="catalog-title">Papercraft</h2>
+    <div class="masonry-gallery">
+        <!-- Kusudamas Album -->
+        <div class="gallery-item">
+            <a href="/gallery/papercraft/kusudamas/">
+                <img src="/gallery/papercraft/kusudamas/kusudama_main.jpg" alt="Kusudama Origami">
+                <h3 class="album-title">Geometric Kusudamas</h3>
+            </a>
+        </div>
+        <!-- Mixed Papercraft Album -->
+        <div class="gallery-item">
+            <a href="/gallery/papercraft/mixed/">
+                <img src="/gallery/papercraft/mixed/mixed_main.jpg" alt="Mixed Papercraft">
+                <h3 class="album-title">Creative Paper Art</h3>
+            </a>
+        </div>
+        <!-- Tessellations Album -->
+        <div class="gallery-item">
+            <a href="/gallery/papercraft/tessellations/">
+                <img src="/gallery/papercraft/tessellations/tessellation_main.jpg" alt="Paper Tessellations">
+                <h3 class="album-title">Tessellation Patterns</h3>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Portraits Section -->
+<section class="catalog-section">
+    <h2 class="catalog-title">Portraits</h2>
+    <div class="masonry-gallery">
+        <!-- Digital Portraits Album -->
+        <div class="gallery-item">
+            <a href="/gallery/portraits/digital/">
+                <img src="/gallery/portraits/digital/digital_main.jpg" alt="Digital Portraits">
+                <h3 class="album-title">Digital Artwork</h3>
+            </a>
+        </div>
+        <!-- Traditional Portraits Album -->
+        <div class="gallery-item">
+            <a href="/gallery/portraits/traditional/">
+                <img src="/gallery/portraits/traditional/traditional_main.jpg" alt="Traditional Portraits">
+                <h3 class="album-title">Traditional Media</h3>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Out There Section -->
+<section class="catalog-section">
+    <h2 class="catalog-title">Out There</h2>
+    <div class="masonry-gallery">
+        <!-- Landscapes Album -->
+        <div class="gallery-item">
+            <a href="/gallery/out-there/landscapes/">
+                <img src="/gallery/out-there/landscapes/landscape_main.jpg" alt="Landscape Photography">
+                <h3 class="album-title">Natural Landscapes</h3>
+            </a>
+        </div>
+        <!-- Abstract Album -->
+        <div class="gallery-item">
+            <a href="/gallery/out-there/abstract/">
+                <img src="/gallery/out-there/abstract/abstract_main.jpg" alt="Abstract Art">
+                <h3 class="album-title">Abstract Expressions</h3>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Add necessary styles -->
 <style>
+    .gallery-header {
+        margin: 2em 0;
+        padding: 1em;
+    }
+
     .catalog-section {
-        margin: 2rem 0;
+        margin: 3em 0;
     }
-    
+
     .catalog-title {
-        text-transform: capitalize;
         border-bottom: 2px solid #333;
-        margin-bottom: 1.5rem;
-        padding-bottom: 0.5rem;
+        padding-bottom: 0.5em;
+        margin-bottom: 1.5em;
     }
-    
-    .albums-grid {
+
+    .masonry-gallery {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 2rem;
+        grid-gap: 20px;
+        padding: 20px;
     }
-    
-    .album-card {
-        position: relative;
+
+    .gallery-item {
+        break-inside: avoid;
+        margin-bottom: 20px;
         transition: transform 0.3s ease;
-        text-decoration: none;
-        color: inherit;
     }
-    
-    .album-card:hover {
+
+    .gallery-item:hover {
         transform: translateY(-5px);
     }
-    
-    .album-thumbnail {
+
+    .gallery-item img {
         width: 100%;
-        height: 200px;
-        object-fit: cover;
+        height: auto;
         border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
-    
+
     .album-title {
-        margin-top: 0.5rem;
+        margin-top: 10px;
         text-align: center;
-        font-size: 1.1rem;
+        font-size: 1.1em;
         color: #333;
     }
+
+    .gallery-item a {
+        text-decoration: none;
+    }
 </style>
-
-<!-- Dynamic Gallery Content -->
-{% assign catalogs = site.static_files | group_by_exp: "file", "file.path | split: '/' | slice: 2 | first" | where_exp: "item", "item.name != 'index.html' and item.name != 'file_maker.py'" %}
-
-{% for catalog in catalogs %}
-    {% assign catalog_name = catalog.name | replace: "_", " " | capitalize %}
-    {% if catalog.items.size > 0 %}
-        <section class="catalog-section">
-            <h2 class="catalog-title">{{ catalog_name }}</h2>
-            <div class="albums-grid">
-                {% assign albums = catalog.items | group_by_exp: "file", "file.path | split: '/' | slice: 3 | first" | sort: "name" %}
-                {% for album in albums %}
-                    {% assign album_path = "/gallery/" | append: catalog.name | append: "/" | append: album.name %}
-                    {% assign album_name = album.name | remove: "20250105_" | replace: "_", " " | capitalize %}
-                    {% assign first_image = album.items | where_exp: "item", "item.path contains '.jpg' or item.path contains '.png'" | first %}
-                    {% if first_image %}
-                        <a href="{{ album_path }}" class="album-card">
-                            <img src="{{ first_image.path }}" alt="{{ album_name }}" class="album-thumbnail">
-                            <h3 class="album-title">{{ album_name }}</h3>
-                        </a>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </section>
-    {% endif %}
-{% endfor %}
-
-<!-- Script to handle image loading and layout -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const images = document.querySelectorAll('.album-thumbnail');
-    images.forEach(img => {
-        img.addEventListener('error', function() {
-            this.src = '/img/placeholder.jpg';
-        });
-    });
-});
-</script>
