@@ -1,146 +1,79 @@
----
-layout: page
-title: "Portrait_001"
-active: gallery
-header-img: "gallery/portraits/Portrait_001/photo_1.jpg"
-album-title: "Portrait_001"
----
-
-<html class="no-js" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta content="charset=utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portrait Gallery</title>
     <style>
-        .masonry-gallery {
-            width: 100%;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            grid-gap: 20px;
-            padding: 20px;
+        .gallery {
+            columns: 3;
+            column-gap: 16px;
+            padding: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .gallery {
+                columns: 2;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery {
+                columns: 1;
+            }
         }
 
         .gallery-item {
             break-inside: avoid;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
+            margin-bottom: 16px;
         }
 
-        .gallery-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .gallery-icon {
-            position: relative;
-            overflow: hidden;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .gallery-icon img {
+        .gallery-item img {
             width: 100%;
-            height: auto;
+            border-radius: 8px;
             display: block;
-            transition: transform 0.3s ease;
-        }
-
-        .gallery-item:hover .gallery-icon img {
-            transform: scale(1.03);
-        }
-
-        .gallery-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 15px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .gallery-item:hover .gallery-caption {
-            opacity: 1;
-        }
-
-        .gallery-caption h3 {
-            margin: 0 0 5px 0;
-            font-size: 1.1em;
-        }
-
-        .gallery-caption p {
-            margin: 0;
-            font-size: 0.9em;
-            opacity: 0.8;
         }
     </style>
 </head>
-
 <body>
-    <section id="content" role="main">
-        <div class="wrapper">
-            <h2>{{page.album-title}}</h2>
+    <div class="gallery" id="gallery"></div>
 
-            <div class="gallery masonry-gallery">
-                {% assign files = site.static_files %}
-                {% for file in files %}
-                    {% if file.path contains page.path and file.path contains 'photo_' and file.extname == '.jpg' %}
-                        <figure class="gallery-item">
-                            <header class='gallery-icon'>
-                                <a href="{{ site.baseurl }}{{ file.path }}" class="popup" 
-                                   title="Portrait {{ file.basename | remove: 'photo_' }}" 
-                                   data-caption="© Anish Sarkar">
-                                    <img src="{{ site.baseurl }}{{ file.path }}">
-                                </a>
-                            </header>
-                            <figcaption class='gallery-caption'>
-                                <div class="entry-summary">
-                                    <h3>Portrait {{ file.basename | remove: 'photo_' }}</h3>
-                                    <p>© Anish Sarkar</p>
-                                </div>
-                            </figcaption>
-                        </figure>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </div>
-    </section>
-
-    <!-- Scripts -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="{{ site.baseurl }}/js/jquery.magnific-popup.js"></script>
-    <script src="{{ site.baseurl }}/js/isotope.pkgd.min.js"></script>
-    
-    <script type="text/javascript">
-        $(document).ready(function($) {
-            // Initialize Magnific Popup
-            $('.popup').magnificPopup({
-                type: 'image',
-                gallery: {
-                    enabled: true,
-                    navigateByImgClick: true,
-                    preload: [0,1]
-                },
-                image: {
-                    titleSrc: function(item) {
-                        return item.el.attr('title') + '&nbsp;' + item.el.attr('data-caption');
+    <script>
+        async function loadGallery() {
+            const gallery = document.getElementById('gallery');
+            let photoIndex = 1;
+            
+            while (true) {
+                try {
+                    // Try to load each photo
+                    const response = await fetch(`photo_${photoIndex}.jpg`);
+                    if (!response.ok) {
+                        // If we get a 404, we've run out of photos
+                        break;
                     }
-                }
-            });
 
-            // Initialize Masonry layout
-            var $grid = $('.masonry-gallery').isotope({
-                itemSelector: '.gallery-item',
-                percentPosition: true,
-                masonry: {
-                    columnWidth: '.gallery-item'
+                    // Create gallery item
+                    const div = document.createElement('div');
+                    div.className = 'gallery-item';
+                    
+                    const img = document.createElement('img');
+                    img.src = `photo_${photoIndex}.jpg`;
+                    img.alt = `Photo ${photoIndex}`;
+                    img.loading = 'lazy'; // Lazy load images
+                    
+                    div.appendChild(img);
+                    gallery.appendChild(div);
+                    
+                    photoIndex++;
+                } catch (error) {
+                    // If there's an error loading the image, stop
+                    break;
                 }
-            });
+            }
+        }
 
-            // Layout Isotope after all images have loaded
-            $grid.imagesLoaded().progress(function() {
-                $grid.isotope('layout');
-            });
-        });
+        // Load the gallery when the page loads
+        window.addEventListener('load', loadGallery);
     </script>
 </body>
 </html>
