@@ -5,7 +5,6 @@ description: A collection of papercraft, portraits, landscapes, and more
 ---
 
 <style>
-    /* Gallery Layout Styles */
     .catalog-section {
         margin: 2rem 0;
     }
@@ -29,6 +28,7 @@ description: A collection of papercraft, portraits, landscapes, and more
         transition: transform 0.3s ease;
         text-decoration: none;
         color: inherit;
+        display: block;
     }
     
     .album-card:hover {
@@ -57,35 +57,79 @@ description: A collection of papercraft, portraits, landscapes, and more
     </header>
 
     {% comment %}
-    Dynamically detect catalogs (top-level folders) and their albums (subfolders)
+    First, get all image files in the gallery directory and its subdirectories
     {% endcomment %}
+    {% assign all_files = site.static_files | where_exp: "file", "file.path contains '/gallery/'" %}
     
-    {% assign catalogs = site.static_files | where_exp: "file", "file.path contains '/gallery/'" | map: "path" | map: "dirname" | uniq %}
-    
-    {% for catalog_path in catalogs %}
-        {% assign catalog_name = catalog_path | split: "/" | last %}
-        {% unless catalog_name == "gallery" %}
+    {% comment %}
+    Get unique catalog folders (direct children of gallery)
+    {% endcomment %}
+    {% assign catalog_paths = "" | split: "" %}
+    {% for file in all_files %}
+        {% assign path_parts = file.path | split: "/" %}
+        {% if path_parts.size >= 3 and path_parts[1] == "gallery" %}
+            {% assign catalog = path_parts[2] %}
+            {% unless catalog_paths contains catalog %}
+                {% assign catalog_paths = catalog_paths | push: catalog %}
+            {% endunless %}
+        {% endif %}
+    {% endfor %}
+
+    {% for catalog in catalog_paths %}
+        {% unless catalog == "index.html" %}
         <section class="catalog-section">
-            <h2 class="catalog-title">{{ catalog_name }}</h2>
+            <h2 class="catalog-title">{{ catalog | replace: "_", " " }}</h2>
             
             <div class="albums-grid">
-                {% assign albums = site.static_files | where_exp: "file", "file.path contains catalog_path" | map: "path" | map: "dirname" | uniq %}
-                
-                {% for album_path in albums %}
-                    {% assign album_name = album_path | split: "/" | last %}
-                    {% unless album_name == catalog_name %}
-                        {% assign first_image = site.static_files | where_exp: "file", "file.path contains album_path" | where_exp: "file", "file.extname == '.jpg' or file.extname == '.jpeg' or file.extname == '.png'" | first %}
-                        
-                        {% if first_image %}
-                        <a href="{{ album_path }}" class="album-card">
-                            <img src="{{ first_image.path }}" alt="{{ album_name }}" class="album-thumbnail">
-                            <h3 class="album-title">{{ album_name | replace: "_", " " }}</h3>
-                        </a>
-                        {% endif %}
-                    {% endunless %}
+                {% comment %}
+                Get all albums (subfolders) for this catalog
+                {% endcomment %}
+                {% assign album_paths = "" | split: "" %}
+                {% for file in all_files %}
+                    {% assign path_parts = file.path | split: "/" %}
+                    {% if path_parts.size >= 4 and path_parts[2] == catalog %}
+                        {% assign album = path_parts[3] %}
+                        {% unless album_paths contains album %}
+                            {% assign album_paths = album_paths | push: album %}
+                        {% endunless %}
+                    {% endif %}
+                {% endfor %}
+
+                {% for album in album_paths %}
+                    {% comment %}
+                    Find the first image in this album
+                    {% endcomment %}
+                    {% assign first_image = all_files | where_exp: "file", "file.path contains catalog" | where_exp: "file", "file.path contains album" | where_exp: "file", "file.extname == '.jpg' or file.extname == '.jpeg' or file.extname == '.png'" | first %}
+                    
+                    {% if first_image %}
+                    <a href="/gallery/{{ catalog }}/{{ album }}" class="album-card">
+                        <img src="{{ first_image.path | relative_url }}" alt="{{ album | replace: '_', ' ' }}" class="album-thumbnail">
+                        <h3 class="album-title">{{ album | replace: "_", " " }}</h3>
+                    </a>
+                    {% endif %}
                 {% endfor %}
             </div>
         </section>
         {% endunless %}
     {% endfor %}
+</div>
+
+{% comment %}
+Debug information (will be hidden in production)
+{% endcomment %}
+<div style="display: none;">
+    <h3>Debug Info:</h3>
+    <h4>All Files:</h4>
+    <ul>
+    {% for file in all_files %}
+        <li>{{ file.path }}</li>
+    {% endfor %}
+    </ul>
+    
+    <h4>Catalogs Found:</h4>
+    <ul>
+    {% for catalog in catalog_paths %}
+        <li>{{ catalog }}</li>
+    {% endfor %}
+    </ul>
 </div>
