@@ -7,6 +7,9 @@ description: A collection of papercraft, portraits, landscapes, and more
 <style>
     .catalog-section {
         margin: 3rem 0;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
     }
     
     .catalog-title {
@@ -19,9 +22,10 @@ description: A collection of papercraft, portraits, landscapes, and more
     
     .albums-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 2rem;
         padding: 1.5rem 0;
+        justify-items: center;
     }
     
     .album-card {
@@ -32,6 +36,8 @@ description: A collection of papercraft, portraits, landscapes, and more
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 100%;
+        max-width: 300px;
     }
     
     .album-card:hover {
@@ -44,13 +50,48 @@ description: A collection of papercraft, portraits, landscapes, and more
         aspect-ratio: 1;
         object-fit: cover;
         border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     
     .album-title {
-        margin-top: 0.5rem;
+        margin-top: 1rem;
         text-align: center;
         font-size: 1.1rem;
         text-transform: capitalize;
+        font-weight: 500;
+    }
+
+    .featured-section {
+        margin: 2rem auto;
+        max-width: 1400px;
+        padding: 0 1rem;
+    }
+
+    .featured-title {
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 1.75rem;
+    }
+
+    .featured-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 4rem;
+    }
+
+    .featured-image {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 8px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .featured-image:hover {
+        transform: scale(1.02);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     }
 </style>
 
@@ -59,6 +100,23 @@ description: A collection of papercraft, portraits, landscapes, and more
         <h1>{{ page.title }}</h1>
         <p class="lead">{{ page.description }}</p>
     </header>
+
+    <!-- Featured Images Section -->
+    <section class="featured-section">
+        <h2 class="featured-title">Featured Works</h2>
+        <div class="featured-grid">
+            <img src="/gallery/papercraft/Flowers/photo_2.jpg" alt="Featured Flower" class="featured-image">
+            <img src="/gallery/papercraft/Kirigami/photo_3.jpg" alt="Featured Kirigami" class="featured-image">
+            <img src="/gallery/portraits/Portrait_001/photo_4.jpg" alt="Featured Portrait" class="featured-image">
+            <img src="/gallery/papercraft/Kusudamas/photo_2.jpg" alt="Featured Kusudama" class="featured-image">
+            <img src="/gallery/landscapes/Morocco/photo_3.jpg" alt="Featured Landscape" class="featured-image">
+            <img src="/gallery/papercraft/Polyhedron/photo_1.jpg" alt="Featured Polyhedron" class="featured-image">
+            <img src="/gallery/papercraft/Tesselations/photo_2.jpg" alt="Featured Tessellation" class="featured-image">
+            <img src="/gallery/papercraft/pleats/photo_1.jpg" alt="Featured Pleat" class="featured-image">
+            <img src="/gallery/papercraft/mix/photo_3.jpg" alt="Featured Mix" class="featured-image">
+            <img src="/gallery/papercraft/Flowers/photo_4.jpg" alt="Featured Flower 2" class="featured-image">
+        </div>
+    </section>
 
     <!-- Papercraft Section -->
     <section class="catalog-section">
@@ -72,31 +130,31 @@ description: A collection of papercraft, portraits, landscapes, and more
                 <img src="/gallery/papercraft/Kirigami/photo_1.jpg" alt="Kirigami" class="album-thumbnail">
                 <h3 class="album-title">Kirigami</h3>
             </a>
-            <a href="/gallery/papercraft/Kusudamas" class="album-card"></a>
+            <a href="/gallery/papercraft/Kusudamas" class="album-card">
                 <img src="/gallery/papercraft/Kusudamas/photo_1.jpg" alt="Kusudamas" class="album-thumbnail">
                 <h3 class="album-title">Kusudamas</h3>
             </a>
-            <a href="/gallery/papercraft/misc" class="album-card"></a>
+            <a href="/gallery/papercraft/misc" class="album-card">
                 <img src="/gallery/papercraft/misc/photo_1.jpg" alt="misc" class="album-thumbnail">
                 <h3 class="album-title">misc</h3>
             </a>
-            <a href="/gallery/papercraft/mix" class="album-card"></a>
+            <a href="/gallery/papercraft/mix" class="album-card">
                 <img src="/gallery/papercraft/mix/photo_1.jpg" alt="mix" class="album-thumbnail">
                 <h3 class="album-title">mix</h3>
             </a>
-            <a href="/gallery/papercraft/pleats" class="album-card"></a>
+            <a href="/gallery/papercraft/pleats" class="album-card">
                 <img src="/gallery/papercraft/pleats/photo_1.jpg" alt="pleats" class="album-thumbnail">
                 <h3 class="album-title">pleats</h3>
             </a>
-            <a href="/gallery/papercraft/Polyhedron" class="album-card"></a>
+            <a href="/gallery/papercraft/Polyhedron" class="album-card">
                 <img src="/gallery/papercraft/Polyhedron/photo_1.jpg" alt="Polyhedron" class="album-thumbnail">
                 <h3 class="album-title">Polyhedron</h3>
             </a>
-            <a href="/gallery/papercraft/Project_1" class="album-card"></a>
+            <a href="/gallery/papercraft/Project_1" class="album-card">
                 <img src="/gallery/papercraft/Project_1/photo_1.jpg" alt="Project_1" class="album-thumbnail">
                 <h3 class="album-title">Project_1</h3>
             </a>
-            <a href="/gallery/papercraft/Tesselations" class="album-card"></a>
+            <a href="/gallery/papercraft/Tesselations" class="album-card">
                 <img src="/gallery/papercraft/Tesselations/photo_1.jpg" alt="Tesselations" class="album-thumbnail">
                 <h3 class="album-title">Tesselations</h3>
             </a>
