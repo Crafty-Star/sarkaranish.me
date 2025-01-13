@@ -5,28 +5,25 @@ description: A collection of papercraft, portraits, landscapes, and more
 ---
 
 <style>
-    /* Improved spacing and organization */
     .catalog-section {
-        margin: 3rem 0;  /* Increased vertical spacing between catalogs */
+        margin: 3rem 0;
     }
     
     .catalog-title {
         text-transform: capitalize;
-        margin: 2rem 0 1rem;  /* Adjusted margins */
+        margin: 2rem 0 1rem;
         padding-bottom: 0.5rem;
         border-bottom: 2px solid #ddd;
-        text-align: center;  /* Center catalog headers */
+        text-align: center;
     }
     
-    /* Enhanced masonry-style grid */
     .albums-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 2rem;  /* Increased gap for better visual separation */
+        gap: 2rem;
         padding: 1.5rem 0;
     }
     
-    /* Improved hover effects */
     .album-card {
         position: relative;
         transition: all 0.3s ease;
@@ -39,7 +36,7 @@ description: A collection of papercraft, portraits, landscapes, and more
     
     .album-card:hover {
         transform: translateY(-5px);
-        filter: brightness(1.05);  /* Subtle brightness increase on hover */
+        filter: brightness(1.05);
     }
     
     .album-thumbnail {
@@ -63,36 +60,48 @@ description: A collection of papercraft, portraits, landscapes, and more
         <p class="lead">{{ page.description }}</p>
     </header>
 
-    {% comment %}
-    Dynamically detect catalogs (top-level folders) and their albums (subfolders)
-    {% endcomment %}
-    
-    {% assign catalogs = site.static_files | where_exp: "file", "file.path contains '/gallery/'" | map: "path" | map: "dirname" | uniq %}
-    
-    {% for catalog_path in catalogs %}
-        {% assign catalog_name = catalog_path | split: "/" | last %}
-        {% unless catalog_name == "gallery" %}
-        <section class="catalog-section">
-            <h2 class="catalog-title">{{ catalog_name }}</h2>
-            
-            <div class="albums-grid">
-                {% assign albums = site.static_files | where_exp: "file", "file.path contains catalog_path" | map: "path" | map: "dirname" | uniq %}
-                
-                {% for album_path in albums %}
-                    {% assign album_name = album_path | split: "/" | last %}
-                    {% unless album_name == catalog_name %}
-                        {% assign first_image = site.static_files | where_exp: "file", "file.path contains album_path" | where_exp: "file", "file.extname == '.jpg' or file.extname == '.jpeg' or file.extname == '.png'" | first %}
-                        
-                        {% if first_image %}
-                        <a href="{{ album_path }}" class="album-card">
-                            <img src="{{ first_image.path }}" alt="{{ album_name }}" class="album-thumbnail">
-                            <h3 class="album-title">{{ album_name | replace: "_", " " }}</h3>
-                        </a>
-                        {% endif %}
-                    {% endunless %}
-                {% endfor %}
-            </div>
-        </section>
-        {% endunless %}
-    {% endfor %}
+    <!-- Papercraft Section -->
+    <section class="catalog-section">
+        <h2 class="catalog-title">Papercraft</h2>
+        <div class="albums-grid">
+            <a href="/gallery/papercraft/Flowers" class="album-card">
+                <img src="/gallery/papercraft/Flowers/photo_1.jpg" alt="Album 1" class="album-thumbnail">
+                <h3 class="album-title">Album 1</h3>
+            </a>
+            <a href="/gallery/papercraft/Kirigami" class="album-card">
+                <img src="/gallery/papercraft/Kirigami/photo_1.jpg" alt="Album 2" class="album-thumbnail">
+                <h3 class="album-title">Album 2</h3>
+            </a>
+        </div>
+    </section>
+
+    <!-- Portraits Section -->
+    <section class="catalog-section">
+        <h2 class="catalog-title">Portraits</h2>
+        <div class="albums-grid">
+            <a href="/gallery/portraits/album1" class="album-card">
+                <img src="/gallery/portraits/album1/first-image.jpg" alt="Album 1" class="album-thumbnail">
+                <h3 class="album-title">Album 1</h3>
+            </a>
+            <a href="/gallery/portraits/album2" class="album-card">
+                <img src="/gallery/portraits/album2/first-image.jpg" alt="Album 2" class="album-thumbnail">
+                <h3 class="album-title">Album 2</h3>
+            </a>
+        </div>
+    </section>
+
+    <!-- Landscapes Section -->
+    <section class="catalog-section">
+        <h2 class="catalog-title">Landscapes</h2>
+        <div class="albums-grid">
+            <a href="/gallery/landscapes/album1" class="album-card">
+                <img src="/gallery/landscapes/album1/first-image.jpg" alt="Album 1" class="album-thumbnail">
+                <h3 class="album-title">Album 1</h3>
+            </a>
+            <a href="/gallery/landscapes/album2" class="album-card">
+                <img src="/gallery/landscapes/album2/first-image.jpg" alt="Album 2" class="album-thumbnail">
+                <h3 class="album-title">Album 2</h3>
+            </a>
+        </div>
+    </section>
 </div>
