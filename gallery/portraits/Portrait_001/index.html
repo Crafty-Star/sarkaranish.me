@@ -81,21 +81,20 @@ album-title: "Portrait_001"
             <h2>{{page.album-title}}</h2>
 
             <div class="gallery masonry-gallery">
-                {% assign image_files = site.static_files | where: "image", true | where_exp: "file", "file.path contains page.path" %}
-                {% for image in image_files %}
-                    {% if image.path contains 'photo_' %}
-                        {% assign photo_number = image.basename | remove: "photo_" %}
+                {% assign files = site.static_files %}
+                {% for file in files %}
+                    {% if file.path contains page.path and file.path contains 'photo_' and file.extname == '.jpg' %}
                         <figure class="gallery-item">
                             <header class='gallery-icon'>
-                                <a href="{{ site.url }}{{ site.baseurl }}{{ image.path }}" class="popup" 
-                                   title="Portrait {{ photo_number }}" 
+                                <a href="{{ site.baseurl }}{{ file.path }}" class="popup" 
+                                   title="Portrait {{ file.basename | remove: 'photo_' }}" 
                                    data-caption="© Anish Sarkar">
-                                    <img src="{{ site.url }}{{ site.baseurl }}{{ image.path }}">
+                                    <img src="{{ site.baseurl }}{{ file.path }}">
                                 </a>
                             </header>
                             <figcaption class='gallery-caption'>
                                 <div class="entry-summary">
-                                    <h3>Portrait {{ photo_number }}</h3>
+                                    <h3>Portrait {{ file.basename | remove: 'photo_' }}</h3>
                                     <p>© Anish Sarkar</p>
                                 </div>
                             </figcaption>
@@ -129,12 +128,17 @@ album-title: "Portrait_001"
             });
 
             // Initialize Masonry layout
-            $('.masonry-gallery').isotope({
+            var $grid = $('.masonry-gallery').isotope({
                 itemSelector: '.gallery-item',
                 percentPosition: true,
                 masonry: {
                     columnWidth: '.gallery-item'
                 }
+            });
+
+            // Layout Isotope after all images have loaded
+            $grid.imagesLoaded().progress(function() {
+                $grid.isotope('layout');
             });
         });
     </script>

@@ -74,6 +74,7 @@ collections:
 
 defaults:
   - scope:
-      path: "gallery"
+      path: ""
+      type: "static_files"
     values:
       image: true
