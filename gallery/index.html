@@ -74,24 +74,156 @@ description: A collection of papercraft, portraits, landscapes, and more
     }
 
     .featured-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 1.5rem;
+        columns: 3;
+        column-gap: 1.5rem;
         margin-bottom: 4rem;
+    }
+
+    @media (max-width: 1200px) {
+        .featured-grid { columns: 2; }
+    }
+
+    @media (max-width: 768px) {
+        .featured-grid { columns: 1; }
+    }
+
+    .featured-item {
+        break-inside: avoid;
+        margin-bottom: 1.5rem;
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        cursor: pointer;
     }
 
     .featured-image {
         width: 100%;
-        height: 300px;
-        object-fit: cover;
+        display: block;
         border-radius: 8px;
+        transform-origin: center;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .featured-image:hover {
+    .featured-item:hover .featured-image {
         transform: scale(1.02);
         box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .featured-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+        color: white;
+        padding: 2rem 1rem 1rem;
+        opacity: 0;
+        transform: translateY(1rem);
+        transition: all 0.3s ease;
+    }
+
+    .featured-item:hover .featured-caption {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Lightbox styles */
+    .portfolio-lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .portfolio-lightbox img {
+        max-height: 90vh;
+        max-width: 90vw;
+        object-fit: contain;
+        border-radius: 4px;
+    }
+
+    .lightbox-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: white;
+        font-size: 24px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .lightbox-close:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .lightbox-nav {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: white;
+        padding: 1rem;
+        cursor: pointer;
+        border-radius: 50%;
+        transition: background 0.3s ease;
+    }
+
+    .lightbox-nav:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .lightbox-nav.prev { left: 20px; }
+    .lightbox-nav.next { right: 20px; }
+
+    /* Image protection styles */
+    .image-protection {
+        position: relative;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
+
+    .image-protection::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        pointer-events: none;
+        background: linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.05) 75%);
+        background-size: 4px 4px;
+    }
+
+    .featured-image, .album-thumbnail, .gallery-item img {
+        pointer-events: none;
+        -webkit-user-drag: none;
+        -khtml-user-drag: none;
+        -moz-user-drag: none;
+        -o-user-drag: none;
+        user-drag: none;
+    }
+
+    /* Lightbox image protection */
+    .portfolio-lightbox img {
+        pointer-events: none;
+        -webkit-user-drag: none;
+        user-drag: none;
     }
 </style>
 
@@ -105,18 +237,129 @@ description: A collection of papercraft, portraits, landscapes, and more
     <section class="featured-section">
         <h2 class="featured-title">Featured Works</h2>
         <div class="featured-grid">
-            <img src="/gallery/papercraft/Flowers/photo_2.jpg" alt="Featured Flower" class="featured-image">
-            <img src="/gallery/papercraft/Kirigami/photo_3.jpg" alt="Featured Kirigami" class="featured-image">
-            <img src="/gallery/portraits/Portrait_001/photo_4.jpg" alt="Featured Portrait" class="featured-image">
-            <img src="/gallery/papercraft/Kusudamas/photo_2.jpg" alt="Featured Kusudama" class="featured-image">
-            <img src="/gallery/landscapes/Morocco/photo_3.jpg" alt="Featured Landscape" class="featured-image">
-            <img src="/gallery/papercraft/Polyhedron/photo_1.jpg" alt="Featured Polyhedron" class="featured-image">
-            <img src="/gallery/papercraft/Tesselations/photo_2.jpg" alt="Featured Tessellation" class="featured-image">
-            <img src="/gallery/papercraft/pleats/photo_1.jpg" alt="Featured Pleat" class="featured-image">
-            <img src="/gallery/papercraft/mix/photo_3.jpg" alt="Featured Mix" class="featured-image">
-            <img src="/gallery/papercraft/Flowers/photo_4.jpg" alt="Featured Flower 2" class="featured-image">
+            <div class="featured-item image-protection">
+                <img src="/gallery/papercraft/Flowers/photo_2.jpg" alt="Featured Flower" class="featured-image">
+                <div class="featured-caption">Delicate Paper Flower Creation</div>
+            </div>
+            <div class="featured-item image-protection">
+                <img src="/gallery/papercraft/Kirigami/photo_3.jpg" alt="Featured Kirigami" class="featured-image">
+                <div class="featured-caption">Intricate Kirigami Pattern</div>
+            </div>
+            <div class="featured-item image-protection">
+                <img src="/gallery/portraits/Portrait_001/photo_4.jpg" alt="Featured Portrait" class="featured-image">
+                <div class="featured-caption">Portrait Study in Natural Light</div>
+            </div>
+            <div class="featured-item image-protection">
+                <img src="/gallery/papercraft/Kusudamas/photo_2.jpg" alt="Featured Kusudama" class="featured-image">
+                <div class="featured-caption">Complex Kusudama Assembly</div>
+            </div>
+            <div class="featured-item image-protection">
+                <img src="/gallery/landscapes/Morocco/photo_3.jpg" alt="Featured Landscape" class="featured-image">
+                <div class="featured-caption">Moroccan Landscape at Golden Hour</div>
+            </div>
+            <div class="featured-item image-protection">
+                <img src="/gallery/papercraft/Polyhedron/photo_1.jpg" alt="Featured Polyhedron" class="featured-image">
+                <div class="featured-caption">Geometric Polyhedron Study</div>
+            </div>
+            <div class="featured-item image-protection">
+                <img src="/gallery/papercraft/Tesselations/photo_2.jpg" alt="Featured Tessellation" class="featured-image">
+                <div class="featured-caption">Repeating Tessellation Pattern</div>
+            </div>
+            <div class="featured-item image-protection">
+                <img src="/gallery/papercraft/pleats/photo_1.jpg" alt="Featured Pleat" class="featured-image">
+                <div class="featured-caption">Precision Paper Pleating</div>
+            </div>
+            <div class="featured-item image-protection">
+                <img src="/gallery/papercraft/mix/photo_3.jpg" alt="Featured Mix" class="featured-image">
+                <div class="featured-caption">Mixed Media Paper Art</div>
+            </div>
         </div>
     </section>
+
+    <!-- Lightbox -->
+    <div class="portfolio-lightbox">
+        <button class="lightbox-close">&times;</button>
+        <button class="lightbox-nav prev">&lt;</button>
+        <button class="lightbox-nav next">&gt;</button>
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <script>
+        // Lightbox functionality
+        const lightbox = document.querySelector('.portfolio-lightbox');
+        const lightboxImg = document.querySelector('#lightbox-img');
+        const featuredItems = document.querySelectorAll('.featured-item');
+        let currentIndex = 0;
+
+        featuredItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                currentIndex = index;
+                const imgSrc = item.querySelector('img').src;
+                lightboxImg.src = imgSrc;
+                lightbox.style.display = 'flex';
+            });
+        });
+
+        document.querySelector('.lightbox-close').addEventListener('click', () => {
+            lightbox.style.display = 'none';
+        });
+
+        document.querySelector('.lightbox-nav.prev').addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + featuredItems.length) % featuredItems.length;
+            lightboxImg.src = featuredItems[currentIndex].querySelector('img').src;
+        });
+
+        document.querySelector('.lightbox-nav.next').addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % featuredItems.length;
+            lightboxImg.src = featuredItems[currentIndex].querySelector('img').src;
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.style.display === 'flex') {
+                if (e.key === 'Escape') lightbox.style.display = 'none';
+                if (e.key === 'ArrowLeft') document.querySelector('.lightbox-nav.prev').click();
+                if (e.key === 'ArrowRight') document.querySelector('.lightbox-nav.next').click();
+            }
+        });
+
+        // Disable right click
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.tagName === 'IMG' || e.target.closest('.image-protection')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Disable keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Prevent Ctrl+S, Ctrl+U, Ctrl+Shift+I, F12
+            if (
+                (e.ctrlKey && (e.key === 's' || e.key === 'u')) ||
+                (e.ctrlKey && e.shiftKey && e.key === 'i') ||
+                e.key === 'F12'
+            ) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Disable drag and drop
+        document.addEventListener('dragstart', function(e) {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // Disable selection
+        document.addEventListener('selectstart', function(e) {
+            if (e.target.tagName === 'IMG' || e.target.closest('.image-protection')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    </script>
 
     <!-- Papercraft Section -->
     <section class="catalog-section">

@@ -151,6 +151,32 @@ description: A collection of papercraft, portraits, landscapes, and more
         color: white;
         padding: 10px;
     }
+
+    /* Image Protection Styles */
+    .gallery img, .lightbox img {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-user-drag: none;
+        -webkit-touch-callout: none;
+        pointer-events: none;
+    }
+
+    .gallery-item {
+        position: relative;
+    }
+
+    .protective-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8=');
+        pointer-events: none;
+        z-index: 1;
+    }
 </style>
 
 <script>
@@ -160,6 +186,16 @@ description: A collection of papercraft, portraits, landscapes, and more
     async function loadGallery() {
         const gallery = document.getElementById('gallery');
         let photoIndex = 1;
+        
+        // Add protection event listeners
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if ((e.ctrlKey || e.metaKey) && 
+                (e.key === 'c' || e.key === 's' || e.key === 'u' || 
+                 e.key === 'p' || e.key === 'a')) {
+                e.preventDefault();
+            }
+        });
         
         while (true) {
             try {
@@ -174,6 +210,11 @@ description: A collection of papercraft, portraits, landscapes, and more
 
                 const div = document.createElement('div');
                 div.className = 'gallery-item';
+                
+                // Add protective overlay
+                const overlay = document.createElement('div');
+                overlay.className = 'protective-overlay';
+                div.appendChild(overlay);
                 
                 const img = document.createElement('img');
                 img.src = imageData.src;

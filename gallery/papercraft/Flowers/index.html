@@ -151,11 +151,82 @@ description: A collection of papercraft, portraits, landscapes, and more
         color: white;
         padding: 10px;
     }
+
+    /* Image Protection Styles */
+    .gallery img, .lightbox img {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-user-drag: none;
+        -webkit-touch-callout: none;
+        pointer-events: none;
+    }
+
+    .protective-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8=');
+        pointer-events: none;
+        z-index: 2;
+    }
+
+    /* Image protection styles */
+    .image-protection {
+        position: relative;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
+
+    .image-protection::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        pointer-events: none;
+        background: linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.05) 75%);
+        background-size: 4px 4px;
+    }
+
+    .gallery-item img {
+        pointer-events: none;
+        -webkit-user-drag: none;
+        -khtml-user-drag: none;
+        -moz-user-drag: none;
+        -o-user-drag: none;
+        user-drag: none;
+    }
+
+    /* Lightbox image protection */
+    .lightbox img {
+        pointer-events: none;
+        -webkit-user-drag: none;
+        user-drag: none;
+    }
 </style>
 
 <script>
     let currentImageIndex = 0;
     const images = [];
+
+    // Add protection event listeners
+    document.addEventListener('contextmenu', (e) => e.preventDefault());
+    document.addEventListener('keydown', (e) => {
+        // Prevent common keyboard shortcuts
+        if ((e.ctrlKey || e.metaKey) && 
+            (e.key === 'c' || e.key === 's' || e.key === 'u' || 
+             e.key === 'p' || e.key === 'a')) {
+            e.preventDefault();
+        }
+    });
 
     async function loadGallery() {
         const gallery = document.getElementById('gallery');
@@ -173,7 +244,11 @@ description: A collection of papercraft, portraits, landscapes, and more
                 images.push(imageData);
 
                 const div = document.createElement('div');
-                div.className = 'gallery-item';
+                div.className = 'gallery-item image-protection';
+                
+                // Add protective overlay
+                const overlay = document.createElement('div');
+                overlay.className = 'protective-overlay';
                 
                 const img = document.createElement('img');
                 img.src = imageData.src;
@@ -186,6 +261,7 @@ description: A collection of papercraft, portraits, landscapes, and more
                 caption.textContent = imageData.caption;
 
                 div.appendChild(img);
+                div.appendChild(overlay);
                 div.appendChild(caption);
                 gallery.appendChild(div);
                 
@@ -231,6 +307,43 @@ description: A collection of papercraft, portraits, landscapes, and more
     document.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
     document.querySelector('.lightbox-nav.prev').addEventListener('click', () => navigateLightbox(-1));
     document.querySelector('.lightbox-nav.next').addEventListener('click', () => navigateLightbox(1));
+
+    // Disable right click
+    document.addEventListener('contextmenu', function(e) {
+        if (e.target.tagName === 'IMG' || e.target.closest('.image-protection')) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    // Disable keyboard shortcuts
+    document.addEventListener('keydown', function(e) {
+        // Prevent Ctrl+S, Ctrl+U, Ctrl+Shift+I, F12
+        if (
+            (e.ctrlKey && (e.key === 's' || e.key === 'u')) ||
+            (e.ctrlKey && e.shiftKey && e.key === 'i') ||
+            e.key === 'F12'
+        ) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    // Disable drag and drop
+    document.addEventListener('dragstart', function(e) {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    // Disable selection
+    document.addEventListener('selectstart', function(e) {
+        if (e.target.tagName === 'IMG' || e.target.closest('.image-protection')) {
+            e.preventDefault();
+            return false;
+        }
+    });
 
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {

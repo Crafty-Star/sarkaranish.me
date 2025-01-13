@@ -63,6 +63,7 @@ description: A collection of papercraft, portraits, landscapes, and more
         overflow: hidden;
         border-radius: 8px;
         transition: transform 0.3s ease;
+        user-select: none;
     }
 
     .gallery-item:hover {
@@ -151,11 +152,57 @@ description: A collection of papercraft, portraits, landscapes, and more
         color: white;
         padding: 10px;
     }
+
+    /* Image Protection Styles */
+    .gallery img, .lightbox img {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-user-drag: none;
+        pointer-events: none;
+    }
+
+    .protective-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8=');
+        pointer-events: none;
+        z-index: 2;
+    }
 </style>
 
 <script>
     let currentImageIndex = 0;
     const images = [];
+
+    // Add protection event listeners
+    function addImageProtection() {
+        document.addEventListener('contextmenu', (e) => {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && 
+                (e.key === 'c' || e.key === 's' || e.key === 'p')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        document.addEventListener('dragstart', (e) => {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+                return false;
+            }
+        });
+    }
 
     async function loadGallery() {
         const gallery = document.getElementById('gallery');
@@ -175,6 +222,9 @@ description: A collection of papercraft, portraits, landscapes, and more
                 const div = document.createElement('div');
                 div.className = 'gallery-item';
                 
+                const overlay = document.createElement('div');
+                overlay.className = 'protective-overlay';
+                
                 const img = document.createElement('img');
                 img.src = imageData.src;
                 img.alt = imageData.caption;
@@ -185,6 +235,7 @@ description: A collection of papercraft, portraits, landscapes, and more
                 caption.className = 'gallery-caption';
                 caption.textContent = imageData.caption;
 
+                div.appendChild(overlay);
                 div.appendChild(img);
                 div.appendChild(caption);
                 gallery.appendChild(div);
@@ -225,9 +276,13 @@ description: A collection of papercraft, portraits, landscapes, and more
         updateLightboxImage();
     }
 
+    // Initialize protection
+    window.addEventListener('load', () => {
+        loadGallery();
+        addImageProtection();
+    });
+
     // Event Listeners
-    window.addEventListener('load', loadGallery);
-    
     document.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
     document.querySelector('.lightbox-nav.prev').addEventListener('click', () => navigateLightbox(-1));
     document.querySelector('.lightbox-nav.next').addEventListener('click', () => navigateLightbox(1));

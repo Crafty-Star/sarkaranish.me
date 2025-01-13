@@ -151,11 +151,40 @@ description: A collection of papercraft, portraits, landscapes, and more
         color: white;
         padding: 10px;
     }
+
+    /* Image Protection Styles */
+    .gallery img, .lightbox img {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-user-drag: none;
+        -khtml-user-drag: none;
+        -moz-user-drag: none;
+        -o-user-drag: none;
+        pointer-events: none;
+    }
+
+    .protective-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8=');
+        pointer-events: none;
+        z-index: 2;
+    }
 </style>
 
 <script>
     let currentImageIndex = 0;
     const images = [];
+
+    function preventImageActions(e) {
+        e.preventDefault();
+        return false;
+    }
 
     async function loadGallery() {
         const gallery = document.getElementById('gallery');
@@ -194,6 +223,16 @@ description: A collection of papercraft, portraits, landscapes, and more
                     const clickedIndex = parseInt(e.target.dataset.index);
                     openLightbox(clickedIndex);
                 });
+                
+                // Add protective overlay
+                const overlay = document.createElement('div');
+                overlay.className = 'protective-overlay';
+                div.appendChild(overlay);
+
+                // Add protection event listeners
+                img.addEventListener('contextmenu', preventImageActions);
+                img.addEventListener('dragstart', preventImageActions);
+                img.addEventListener('mousedown', preventImageActions);
                 
                 photoIndex++;
             } catch (error) {
@@ -238,6 +277,21 @@ description: A collection of papercraft, portraits, landscapes, and more
             if (e.key === 'Escape') closeLightbox();
             if (e.key === 'ArrowLeft') navigateLightbox(-1);
             if (e.key === 'ArrowRight') navigateLightbox(1);
+        }
+    });
+
+    // Add global protection event listeners
+    document.addEventListener('contextmenu', e => {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    document.addEventListener('keydown', e => {
+        if (e.ctrlKey && (e.key === 'c' || e.key === 's')) {
+            e.preventDefault();
+            return false;
         }
     });
 </script>

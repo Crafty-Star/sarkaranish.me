@@ -42,6 +42,10 @@ description: A collection of papercraft, portraits, landscapes, and more
         columns: 4;
         column-gap: 20px;
         padding: 20px;
+        user-select: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
     }
 
     @media (max-width: 1200px) {
@@ -63,6 +67,7 @@ description: A collection of papercraft, portraits, landscapes, and more
         overflow: hidden;
         border-radius: 8px;
         transition: transform 0.3s ease;
+        pointer-events: none;
     }
 
     .gallery-item:hover {
@@ -75,6 +80,12 @@ description: A collection of papercraft, portraits, landscapes, and more
         border-radius: 8px;
         cursor: pointer;
         transition: filter 0.3s ease;
+        -webkit-user-drag: none;
+        -khtml-user-drag: none;
+        -moz-user-drag: none;
+        -o-user-drag: none;
+        user-drag: none;
+        pointer-events: all;
     }
 
     .gallery-item:hover img {
@@ -94,6 +105,18 @@ description: A collection of papercraft, portraits, landscapes, and more
 
     .gallery-item:hover .gallery-caption {
         bottom: 0;
+    }
+
+    .gallery-item::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=');
+        pointer-events: none;
+        opacity: 0.01;
     }
 
     /* Lightbox styles */
@@ -157,6 +180,19 @@ description: A collection of papercraft, portraits, landscapes, and more
     let currentImageIndex = 0;
     const images = [];
 
+    document.addEventListener('contextmenu', (e) => {
+        if (e.target.tagName === 'IMG') {
+            e.preventDefault();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && 
+            (e.key === 'c' || e.key === 's' || e.key === 'u' || e.key === 'p')) {
+            e.preventDefault();
+        }
+    });
+
     async function loadGallery() {
         const gallery = document.getElementById('gallery');
         let photoIndex = 1;
@@ -207,6 +243,9 @@ description: A collection of papercraft, portraits, landscapes, and more
         const lightbox = document.getElementById('lightbox');
         lightbox.style.display = 'flex';
         updateLightboxImage();
+        
+        const lightboxImg = document.getElementById('lightbox-img');
+        lightboxImg.addEventListener('dragstart', (e) => e.preventDefault());
     }
 
     function updateLightboxImage() {

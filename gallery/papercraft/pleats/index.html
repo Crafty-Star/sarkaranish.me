@@ -151,6 +151,34 @@ description: A collection of papercraft, portraits, landscapes, and more
         color: white;
         padding: 10px;
     }
+
+    /* Image Protection Styles */
+    .gallery img, .lightbox img {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-user-drag: none;
+        -webkit-touch-callout: none;
+        pointer-events: none;
+    }
+
+    .gallery-item {
+        position: relative;
+    }
+
+    .gallery-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=');
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0.01;
+    }
 </style>
 
 <script>
@@ -225,9 +253,38 @@ description: A collection of papercraft, portraits, landscapes, and more
         updateLightboxImage();
     }
 
+    // Add image protection event listeners
+    function addImageProtection() {
+        document.addEventListener('contextmenu', (e) => {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            // Prevent common screenshot/save shortcuts
+            if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'p' || e.key === 'c')) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        document.addEventListener('dragstart', (e) => {
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+                return false;
+            }
+        });
+    }
+
+    // Add protection initialization to window load
+    window.addEventListener('load', () => {
+        loadGallery();
+        addImageProtection();
+    });
+
     // Event Listeners
-    window.addEventListener('load', loadGallery);
-    
     document.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
     document.querySelector('.lightbox-nav.prev').addEventListener('click', () => navigateLightbox(-1));
     document.querySelector('.lightbox-nav.next').addEventListener('click', () => navigateLightbox(1));
