@@ -70,3 +70,10 @@ collections:
   projects:
     output: true
     permalink: /:collection/:title/
+
+
+defaults:
+  - scope:
+      path: "gallery"
+    values:
+      image: true
