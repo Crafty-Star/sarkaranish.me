@@ -1,134 +1,91 @@
 ---
-layout: home
-title: "Art Gallery"
-description: "A collection of artwork spanning various mediums and styles"
+layout: default
+title: Gallery
+description: A collection of papercraft, portraits, landscapes, and more
 ---
 
-<!-- Main title and description section -->
-<div class="gallery-header text-center">
-    <h1>{{ page.title }}</h1>
-    <p class="lead">{{ page.description }}</p>
-</div>
-
-<!-- Papercraft Section -->
-<section class="catalog-section">
-    <h2 class="catalog-title">Papercraft</h2>
-    <div class="masonry-gallery">
-        <!-- Kusudamas Album -->
-        <div class="gallery-item">
-            <a href="/gallery/papercraft/kusudamas/">
-                <img src="/gallery/papercraft/kusudamas/kusudama_main.jpg" alt="Kusudama Origami">
-                <h3 class="album-title">Geometric Kusudamas</h3>
-            </a>
-        </div>
-        <!-- Mixed Papercraft Album -->
-        <div class="gallery-item">
-            <a href="/gallery/papercraft/mixed/">
-                <img src="/gallery/papercraft/mixed/mixed_main.jpg" alt="Mixed Papercraft">
-                <h3 class="album-title">Creative Paper Art</h3>
-            </a>
-        </div>
-        <!-- Tessellations Album -->
-        <div class="gallery-item">
-            <a href="/gallery/papercraft/tessellations/">
-                <img src="/gallery/papercraft/tessellations/tessellation_main.jpg" alt="Paper Tessellations">
-                <h3 class="album-title">Tessellation Patterns</h3>
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- Portraits Section -->
-<section class="catalog-section">
-    <h2 class="catalog-title">Portraits</h2>
-    <div class="masonry-gallery">
-        <!-- Digital Portraits Album -->
-        <div class="gallery-item">
-            <a href="/gallery/portraits/digital/">
-                <img src="/gallery/portraits/digital/digital_main.jpg" alt="Digital Portraits">
-                <h3 class="album-title">Digital Artwork</h3>
-            </a>
-        </div>
-        <!-- Traditional Portraits Album -->
-        <div class="gallery-item">
-            <a href="/gallery/portraits/traditional/">
-                <img src="/gallery/portraits/traditional/traditional_main.jpg" alt="Traditional Portraits">
-                <h3 class="album-title">Traditional Media</h3>
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- Out There Section -->
-<section class="catalog-section">
-    <h2 class="catalog-title">Out There</h2>
-    <div class="masonry-gallery">
-        <!-- Landscapes Album -->
-        <div class="gallery-item">
-            <a href="/gallery/out-there/landscapes/">
-                <img src="/gallery/out-there/landscapes/landscape_main.jpg" alt="Landscape Photography">
-                <h3 class="album-title">Natural Landscapes</h3>
-            </a>
-        </div>
-        <!-- Abstract Album -->
-        <div class="gallery-item">
-            <a href="/gallery/out-there/abstract/">
-                <img src="/gallery/out-there/abstract/abstract_main.jpg" alt="Abstract Art">
-                <h3 class="album-title">Abstract Expressions</h3>
-            </a>
-        </div>
-    </div>
-</section>
-
-<!-- Add necessary styles -->
 <style>
-    .gallery-header {
-        margin: 2em 0;
-        padding: 1em;
-    }
-
+    /* Gallery Layout Styles */
     .catalog-section {
-        margin: 3em 0;
+        margin: 2rem 0;
     }
-
+    
     .catalog-title {
-        border-bottom: 2px solid #333;
-        padding-bottom: 0.5em;
-        margin-bottom: 1.5em;
+        text-transform: capitalize;
+        margin: 1.5rem 0;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #ddd;
     }
-
-    .masonry-gallery {
+    
+    .albums-grid {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        grid-gap: 20px;
-        padding: 20px;
+        gap: 1.5rem;
+        padding: 1rem 0;
     }
-
-    .gallery-item {
-        break-inside: avoid;
-        margin-bottom: 20px;
+    
+    .album-card {
+        position: relative;
         transition: transform 0.3s ease;
+        text-decoration: none;
+        color: inherit;
     }
-
-    .gallery-item:hover {
+    
+    .album-card:hover {
         transform: translateY(-5px);
     }
-
-    .gallery-item img {
+    
+    .album-thumbnail {
         width: 100%;
-        height: auto;
+        aspect-ratio: 1;
+        object-fit: cover;
         border-radius: 8px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
-
+    
     .album-title {
-        margin-top: 10px;
+        margin-top: 0.5rem;
         text-align: center;
-        font-size: 1.1em;
-        color: #333;
-    }
-
-    .gallery-item a {
-        text-decoration: none;
+        font-size: 1.1rem;
+        text-transform: capitalize;
     }
 </style>
+
+<div class="container">
+    <header class="text-center my-5">
+        <h1>{{ page.title }}</h1>
+        <p class="lead">{{ page.description }}</p>
+    </header>
+
+    {% comment %}
+    Dynamically detect catalogs (top-level folders) and their albums (subfolders)
+    {% endcomment %}
+    
+    {% assign catalogs = site.static_files | where_exp: "file", "file.path contains '/gallery/'" | map: "path" | map: "dirname" | uniq %}
+    
+    {% for catalog_path in catalogs %}
+        {% assign catalog_name = catalog_path | split: "/" | last %}
+        {% unless catalog_name == "gallery" %}
+        <section class="catalog-section">
+            <h2 class="catalog-title">{{ catalog_name }}</h2>
+            
+            <div class="albums-grid">
+                {% assign albums = site.static_files | where_exp: "file", "file.path contains catalog_path" | map: "path" | map: "dirname" | uniq %}
+                
+                {% for album_path in albums %}
+                    {% assign album_name = album_path | split: "/" | last %}
+                    {% unless album_name == catalog_name %}
+                        {% assign first_image = site.static_files | where_exp: "file", "file.path contains album_path" | where_exp: "file", "file.extname == '.jpg' or file.extname == '.jpeg' or file.extname == '.png'" | first %}
+                        
+                        {% if first_image %}
+                        <a href="{{ album_path }}" class="album-card">
+                            <img src="{{ first_image.path }}" alt="{{ album_name }}" class="album-thumbnail">
+                            <h3 class="album-title">{{ album_name | replace: "_", " " }}</h3>
+                        </a>
+                        {% endif %}
+                    {% endunless %}
+                {% endfor %}
+            </div>
+        </section>
+        {% endunless %}
+    {% endfor %}
+</div>
