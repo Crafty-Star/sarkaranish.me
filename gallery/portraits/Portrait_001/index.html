@@ -4,6 +4,11 @@ title: Portrait_001
 description: A collection of papercraft, portraits, landscapes, and more
 ---
 
+<header class="gallery-header">
+    <h1>{{ page.title }}</h1>
+    <p>{{ page.description }}</p>
+</header>
+
 <div class="gallery" id="gallery"></div>
 
 <!-- Lightbox -->
@@ -16,6 +21,23 @@ description: A collection of papercraft, portraits, landscapes, and more
 </div>
 
 <style>
+    .gallery-header {
+        text-align: center;
+        padding: 40px 20px;
+        margin-bottom: 20px;
+    }
+
+    .gallery-header h1 {
+        margin: 0 0 15px 0;
+        font-size: 2.5em;
+    }
+
+    .gallery-header p {
+        margin: 0;
+        color: #666;
+        font-size: 1.1em;
+    }
+
     .gallery {
         columns: 4;
         column-gap: 20px;
@@ -157,7 +179,7 @@ description: A collection of papercraft, portraits, landscapes, and more
                 img.src = imageData.src;
                 img.alt = imageData.caption;
                 img.loading = 'lazy';
-                img.dataset.index = photoIndex - 1;
+                img.dataset.index = (photoIndex - 1).toString();
                 
                 const caption = document.createElement('div');
                 caption.className = 'gallery-caption';
@@ -168,7 +190,10 @@ description: A collection of papercraft, portraits, landscapes, and more
                 gallery.appendChild(div);
                 
                 // Add click event for lightbox
-                img.addEventListener('click', () => openLightbox(photoIndex - 1));
+                img.addEventListener('click', (e) => {
+                    const clickedIndex = parseInt(e.target.dataset.index);
+                    openLightbox(clickedIndex);
+                });
                 
                 photoIndex++;
             } catch (error) {
