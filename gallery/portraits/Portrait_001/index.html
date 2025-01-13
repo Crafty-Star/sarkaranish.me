@@ -198,14 +198,40 @@ description: A collection of papercraft, portraits, landscapes, and more
         const gallery = document.getElementById('gallery');
         let photoIndex = 1;
         
-        while (true) {
-            try {
-                const response = await fetch(`photo_${photoIndex}.jpg`);
-                if (!response.ok) break;
+        // Add loading indicator
+        const loadingSpinner = document.createElement('div');
+        loadingSpinner.className = 'loading-spinner';
+        gallery.appendChild(loadingSpinner);
 
+        try {
+            // First, discover all available images
+            const maxAttempts = 20; // Increase this number to check for more images
+            const imagePromises = [];
+
+            for (let i = 1; i <= maxAttempts; i++) {
+                imagePromises.push(
+                    fetch(`photo_${i}.jpg`, { method: 'HEAD' })
+                        .then(response => {
+                            if (response.ok) {
+                                return {
+                                    index: i,
+                                    exists: true
+                                };
+                            }
+                            return { index: i, exists: false };
+                        })
+                        .catch(() => ({ index: i, exists: false }))
+                );
+            }
+
+            const results = await Promise.all(imagePromises);
+            const existingImages = results.filter(result => result.exists);
+
+            // Now create gallery items for existing images
+            for (const result of existingImages) {
                 const imageData = {
-                    src: `photo_${photoIndex}.jpg`,
-                    caption: `Portrait ${photoIndex}`
+                    src: `photo_${result.index}.jpg`,
+                    caption: `Portrait ${result.index}`
                 };
                 images.push(imageData);
 
@@ -216,7 +242,7 @@ description: A collection of papercraft, portraits, landscapes, and more
                 img.src = imageData.src;
                 img.alt = imageData.caption;
                 img.loading = 'lazy';
-                img.dataset.index = (photoIndex - 1).toString();
+                img.dataset.index = (images.length - 1).toString();
                 
                 const caption = document.createElement('div');
                 caption.className = 'gallery-caption';
@@ -231,19 +257,16 @@ description: A collection of papercraft, portraits, landscapes, and more
                     const clickedIndex = parseInt(e.target.dataset.index);
                     openLightbox(clickedIndex);
                 });
-                
-                photoIndex++;
-            } catch (error) {
-                break;
             }
+
+            console.log(`Loaded ${images.length} images`);
+        } catch (error) {
+            console.error('Error loading gallery:', error);
+        } finally {
+            // Remove loading spinner
+            loadingSpinner.remove();
         }
     }
-
-    // Add loading indicator
-    const gallery = document.getElementById('gallery');
-    const loadingSpinner = document.createElement('div');
-    loadingSpinner.className = 'loading-spinner';
-    gallery.appendChild(loadingSpinner);
 
     // Improve image loading with preloading
     function preloadImage(src) {
