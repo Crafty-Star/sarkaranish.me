@@ -1,0 +1,146 @@
+---
+layout: page
+title: "Portrait_001"
+active: gallery
+header-img: "gallery/portraits/Portrait_001/photo_1.jpg"
+album-title: "Portrait_001"
+images:
+- image_path: /gallery/portraits/Portrait_001/photo_1.jpg
+  caption: "Portrait 1"
+  copyright: "© Anish Sarkar"
+- image_path: /gallery/portraits/Portrait_001/photo_2.jpg
+  caption: "Portrait 2"
+  copyright: "© Anish Sarkar"
+- image_path: /gallery/portraits/Portrait_001/photo_3.jpg
+  caption: "Portrait 3"
+  copyright: "© Anish Sarkar"
+---
+
+<html class="no-js" lang="en">
+<head>
+    <meta content="charset=utf-8">
+    <style>
+        .masonry-gallery {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-gap: 20px;
+            padding: 20px;
+        }
+
+        .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-icon {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .gallery-icon img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-icon img {
+            transform: scale(1.03);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 15px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
+        }
+
+        .gallery-caption h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.1em;
+        }
+
+        .gallery-caption p {
+            margin: 0;
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+    <section id="content" role="main">
+        <div class="wrapper">
+            <h2>{{page.album-title}}</h2>
+
+            <div class="gallery masonry-gallery">
+                {% for image in page.images %}
+                <figure class="gallery-item">
+                    <header class='gallery-icon'>
+                        <a href="{{ site.url }}{{ site.baseurl }}{{ image.image_path }}" class="popup" title="{{ image.caption }}" data-caption="{{ image.copyright }}">
+                            <img src="{{ site.url }}{{ site.baseurl }}{{ image.image_path }}">
+                        </a>
+                    </header>
+                    <figcaption class='gallery-caption'>
+                        <div class="entry-summary">
+                            <h3>{{image.caption}}</h3>
+                            <p>{{image.copyright}}</p>
+                        </div>
+                    </figcaption>
+                </figure>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="{{ site.baseurl }}/js/jquery.magnific-popup.js"></script>
+    <script src="{{ site.baseurl }}/js/isotope.pkgd.min.js"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function($) {
+            // Initialize Magnific Popup
+            $('.popup').magnificPopup({
+                type: 'image',
+                gallery: {
+                    enabled: true,
+                    navigateByImgClick: true,
+                    preload: [0,1]
+                },
+                image: {
+                    titleSrc: function(item) {
+                        return item.el.attr('title') + '&nbsp;' + item.el.attr('data-caption');
+                    }
+                }
+            });
+
+            // Initialize Masonry layout
+            $('.masonry-gallery').isotope({
+                itemSelector: '.gallery-item',
+                percentPosition: true,
+                masonry: {
+                    columnWidth: '.gallery-item'
+                }
+            });
+        });
+    </script>
+</body>
+</html>
