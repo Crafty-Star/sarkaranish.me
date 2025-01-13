@@ -56,15 +56,9 @@ description: A collection of papercraft, portraits, landscapes, and more
         <p class="lead">{{ page.description }}</p>
     </header>
 
-    {% comment %}
-    First, get all image files in the gallery directory and its subdirectories
-    {% endcomment %}
     {% assign all_files = site.static_files | where_exp: "file", "file.path contains '/gallery/'" %}
-    
-    {% comment %}
-    Get unique catalog folders (direct children of gallery)
-    {% endcomment %}
     {% assign catalog_paths = "" | split: "" %}
+    
     {% for file in all_files %}
         {% assign path_parts = file.path | split: "/" %}
         {% if path_parts.size >= 3 and path_parts[1] == "gallery" %}
@@ -77,46 +71,37 @@ description: A collection of papercraft, portraits, landscapes, and more
 
     {% for catalog in catalog_paths %}
         {% unless catalog == "index.html" %}
-        <section class="catalog-section">
-            <h2 class="catalog-title">{{ catalog | replace: "_", " " }}</h2>
-            
-            <div class="albums-grid">
-                {% comment %}
-                Get all albums (subfolders) for this catalog
-                {% endcomment %}
-                {% assign album_paths = "" | split: "" %}
-                {% for file in all_files %}
-                    {% assign path_parts = file.path | split: "/" %}
-                    {% if path_parts.size >= 4 and path_parts[2] == catalog %}
-                        {% assign album = path_parts[3] %}
-                        {% unless album_paths contains album %}
-                            {% assign album_paths = album_paths | push: album %}
-                        {% endunless %}
-                    {% endif %}
-                {% endfor %}
+            <section class="catalog-section">
+                <h2 class="catalog-title">{{ catalog | replace: "_", " " }}</h2>
+                
+                <div class="albums-grid">
+                    {% assign album_paths = "" | split: "" %}
+                    {% for file in all_files %}
+                        {% assign path_parts = file.path | split: "/" %}
+                        {% if path_parts.size >= 4 and path_parts[2] == catalog %}
+                            {% assign album = path_parts[3] %}
+                            {% unless album_paths contains album %}
+                                {% assign album_paths = album_paths | push: album %}
+                            {% endunless %}
+                        {% endif %}
+                    {% endfor %}
 
-                {% for album in album_paths %}
-                    {% comment %}
-                    Find the first image in this album
-                    {% endcomment %}
-                    {% assign first_image = all_files | where_exp: "file", "file.path contains catalog" | where_exp: "file", "file.path contains album" | where_exp: "file", "file.extname == '.jpg' or file.extname == '.jpeg' or file.extname == '.png'" | first %}
-                    
-                    {% if first_image %}
-                    <a href="/gallery/{{ catalog }}/{{ album }}" class="album-card">
-                        <img src="{{ first_image.path | relative_url }}" alt="{{ album | replace: '_', ' ' }}" class="album-thumbnail">
-                        <h3 class="album-title">{{ album | replace: "_", " " }}</h3>
-                    </a>
-                    {% endif %}
-                {% endfor %}
-            </div>
-        </section>
+                    {% for album in album_paths %}
+                        {% assign first_image = all_files | where_exp: "file", "file.path contains catalog" | where_exp: "file", "file.path contains album" | where_exp: "file", "file.extname == '.jpg' or file.extname == '.jpeg' or file.extname == '.png'" | first %}
+                        
+                        {% if first_image %}
+                            <a href="/gallery/{{ catalog }}/{{ album }}" class="album-card">
+                                <img src="{{ first_image.path | relative_url }}" alt="{{ album | replace: '_', ' ' }}" class="album-thumbnail">
+                                <h3 class="album-title">{{ album | replace: "_", " " }}</h3>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </section>
         {% endunless %}
     {% endfor %}
 </div>
 
-{% comment %}
-Debug information (will be hidden in production)
-{% endcomment %}
 <div style="display: none;">
     <h3>Debug Info:</h3>
     <h4>All Files:</h4>
