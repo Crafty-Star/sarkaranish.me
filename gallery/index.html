@@ -4,429 +4,71 @@ title: Gallery
 description: photos of papercraft, portraits, landscapes, and more
 ---
 
-<style>
-    .catalog-section {
-        margin: 3rem 0;
-        max-width: 1200px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    
-    .catalog-title {
-        text-transform: capitalize;
-        margin: 2rem 0 1rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 2px solid #ddd;
-        text-align: center;
-    }
-    
-    .albums-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-        padding: 1.5rem 0;
-        justify-items: center;
-    }
-    
-    .album-card {
-        position: relative;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        color: inherit;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        max-width: 300px;
-    }
-    
-    .album-card:hover {
-        transform: translateY(-5px);
-        filter: brightness(1.05);
-    }
-    
-    .album-thumbnail {
-        width: 100%;
-        aspect-ratio: 1;
-        object-fit: cover;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    
-    .album-title {
-        margin-top: 1rem;
-        text-align: center;
-        font-size: 1.1rem;
-        text-transform: capitalize;
-        font-weight: 500;
-    }
+<header style="text-align:center; padding:24px 16px;">
+  <h1>{{ page.title }}</h1>
+  <p style="color:#555;">{{ page.description }}</p>
+  <p style="margin-top:8px; color:#777;">Click an album to view photos.</p>
+  <hr style="margin-top:16px;">
+</header>
 
-    .featured-section {
-        margin: 2rem auto;
-        max-width: 1400px;
-        padding: 0 1rem;
-    }
+<section style="max-width:1000px; margin:0 auto; padding:0 16px 32px;">
+  <h2 style="margin:16px 0;">Papercraft</h2>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px;">
+    <a href="/gallery/papercraft/Flowers" style="text-decoration:none; color:inherit; border:1px solid #eee; border-radius:8px; padding:12px;">
+      <img src="/gallery/papercraft/Flowers/photo_1.jpg" alt="Flowers" style="width:100%; height:180px; object-fit:cover; border-radius:6px;">
+      <div style="margin-top:8px; font-weight:600;">Flowers</div>
+    </a>
+    <a href="/gallery/papercraft/Kirigami" style="text-decoration:none; color:inherit; border:1px solid #eee; border-radius:8px; padding:12px;">
+      <img src="/gallery/papercraft/Kirigami/photo_1.jpg" alt="Kirigami" style="width:100%; height:180px; object-fit:cover; border-radius:6px;">
+      <div style="margin-top:8px; font-weight:600;">Kirigami</div>
+    </a>
+    <a href="/gallery/papercraft/Kusudamas" style="text-decoration:none; color:inherit; border:1px solid #eee; border-radius:8px; padding:12px;">
+      <img src="/gallery/papercraft/Kusudamas/photo_1.jpg" alt="Kusudamas" style="width:100%; height:180px; object-fit:cover; border-radius:6px;">
+      <div style="margin-top:8px; font-weight:600;">Kusudamas</div>
+    </a>
+    <a href="/gallery/papercraft/misc" style="text-decoration:none; color:inherit; border:1px solid #eee; border-radius:8px; padding:12px;">
+      <img src="/gallery/papercraft/misc/photo_1.jpg" alt="misc" style="width:100%; height:180px; object-fit:cover; border-radius:6px;">
+      <div style="margin-top:8px; font-weight:600;">misc</div>
+    </a>
+    <a href="/gallery/papercraft/mix" style="text-decoration:none; color:inherit; border:1px solid #eee; border-radius:8px; padding:12px;">
+      <img src="/gallery/papercraft/mix/photo_1.jpg" alt="mix" style="width:100%; height:180px; object-fit:cover; border-radius:6px;">
+      <div style="margin-top:8px; font-weight:600;">mix</div>
+    </a>
+    <a href="/gallery/papercraft/pleats" style="text-decoration:none; color:inherit; border:1px solid #eee; border-radius:8px; padding:12px;">
+      <img src="/gallery/papercraft/pleats/photo_1.jpg" alt="pleats" style="width:100%; height:180px; object-fit:cover; border-radius:6px;">
+      <div style="margin-top:8px; font-weight:600;">pleats</div>
+    </a>
+    <a href="/gallery/papercraft/Polyhedron" style="text-decoration:none; color:inherit; border:1px solid #eee; border-radius:8px; padding:12px;">
+      <img src="/gallery/papercraft/Polyhedron/photo_1.jpg" alt="Polyhedron" style="width:100%; height:180px; object-fit:cover; border-radius:6px;">
+      <div style="margin-top:8px; font-weight:600;">Polyhedron</div>
+    </a>
+    <a href="/gallery/papercraft/Project_1" style="text-decoration:none; color:inherit; border:1px solid #eee; border-radius:8px; padding:12px;">
+      <img src="/gallery/papercraft/Project_1/photo_1.jpg" alt="Project_1" style="width:100%; height:180px; object-fit:cover; border-radius:6px;">
+      <div style="margin-top:8px; font-weight:600;">Project_1</div>
+    </a>
+    <a href="/gallery/papercraft/Tesselations" style="text-decoration:none; color:inherit; border:1px solid #eee; border-radius:8px; padding:12px;">
+      <img src="/gallery/papercraft/Tesselations/photo_1.jpg" alt="Tesselations" style="width:100%; height:180px; object-fit:cover; border-radius:6px;">
+      <div style="margin-top:8px; font-weight:600;">Tesselations</div>
+    </a>
+    <a href="/gallery/papercraft/mandala" style="text-decoration:none; color:inherit; border:1px solid #eee; border-radius:8px; padding:12px;">
+      <img src="/gallery/papercraft/mandala/mandala.gif" alt="mandala" style="width:100%; height:180px; object-fit:cover; border-radius:6px;">
+      <div style="margin-top:8px; font-weight:600;">Mandala</div>
+    </a>
+  </div>
 
-    .featured-title {
-        text-align: center;
-        margin-bottom: 2rem;
-        font-size: 1.75rem;
-    }
+  <h2 style="margin:24px 0 16px;">Portraits</h2>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px;">
+    <a href="/gallery/portraits/Portrait_001" style="text-decoration:none; color:inherit; border:1px solid #eee; border-radius:8px; padding:12px;">
+      <img src="/gallery/portraits/Portrait_001/photo_1.jpg" alt="Portrait_001" style="width:100%; height:180px; object-fit:cover; border-radius:6px;">
+      <div style="margin-top:8px; font-weight:600;">Portrait_001</div>
+    </a>
+  </div>
 
-    .featured-grid {
-        columns: 3;
-        column-gap: 1.5rem;
-        margin-bottom: 4rem;
-    }
-
-    @media (max-width: 1200px) {
-        .featured-grid { columns: 2; }
-    }
-
-    @media (max-width: 768px) {
-        .featured-grid { columns: 1; }
-    }
-
-    .featured-item {
-        break-inside: avoid;
-        margin-bottom: 1.5rem;
-        position: relative;
-        overflow: hidden;
-        border-radius: 8px;
-        cursor: pointer;
-    }
-
-    .featured-image {
-        width: 100%;
-        display: block;
-        border-radius: 8px;
-        transform-origin: center;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    }
-
-    .featured-item:hover .featured-image {
-        transform: scale(1.02);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
-
-    .featured-caption {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-        color: white;
-        padding: 2rem 1rem 1rem;
-        opacity: 0;
-        transform: translateY(1rem);
-        transition: all 0.3s ease;
-    }
-
-    .featured-item:hover .featured-caption {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    /* Lightbox styles */
-    .portfolio-lightbox {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.9);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-    }
-
-    .portfolio-lightbox img {
-        max-height: 90vh;
-        max-width: 90vw;
-        object-fit: contain;
-        border-radius: 4px;
-    }
-
-    .lightbox-close {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        background: rgba(255, 255, 255, 0.1);
-        border: none;
-        color: white;
-        font-size: 24px;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        cursor: pointer;
-        transition: background 0.3s ease;
-    }
-
-    .lightbox-close:hover {
-        background: rgba(255, 255, 255, 0.2);
-    }
-
-    .lightbox-nav {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: rgba(255, 255, 255, 0.1);
-        border: none;
-        color: white;
-        padding: 1rem;
-        cursor: pointer;
-        border-radius: 50%;
-        transition: background 0.3s ease;
-    }
-
-    .lightbox-nav:hover {
-        background: rgba(255, 255, 255, 0.2);
-    }
-
-    .lightbox-nav.prev { left: 20px; }
-    .lightbox-nav.next { right: 20px; }
-
-    /* Image protection styles */
-    .image-protection {
-        position: relative;
-        user-select: none;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-    }
-
-    .image-protection::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        z-index: 2;
-        pointer-events: none;
-        background: linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.05) 75%);
-        background-size: 4px 4px;
-    }
-
-    .featured-image, .album-thumbnail, .gallery-item img {
-        pointer-events: none;
-        -webkit-user-drag: none;
-        -khtml-user-drag: none;
-        -moz-user-drag: none;
-        -o-user-drag: none;
-        user-drag: none;
-    }
-
-    /* Lightbox image protection */
-    .portfolio-lightbox img {
-        pointer-events: none;
-        -webkit-user-drag: none;
-        user-drag: none;
-    }
-</style>
-
-<div class="container">
-    <header class="text-center my-5">
-        <h1>{{ page.title }}</h1>
-        <p class="lead">{{ page.description }}</p>
-    </header>
-
-    <!-- Featured Images Section -->
-    <section class="featured-section">
-        <h2 class="featured-title">Featured Works</h2>
-        <div class="featured-grid">
-            <div class="featured-item image-protection">
-                <img src="/gallery/papercraft/Flowers/photo_2.jpg" alt="Featured Flower" class="featured-image">
-                <div class="featured-caption">Delicate Paper Flower Creation</div>
-            </div>
-            <div class="featured-item image-protection">
-                <img src="/gallery/papercraft/Kirigami/photo_3.jpg" alt="Featured Kirigami" class="featured-image">
-                <div class="featured-caption">Intricate Kirigami Pattern</div>
-            </div>
-            <div class="featured-item image-protection">
-                <img src="/gallery/portraits/Portrait_001/photo_4.jpg" alt="Featured Portrait" class="featured-image">
-                <div class="featured-caption">Portrait Study in Natural Light</div>
-            </div>
-            <div class="featured-item image-protection">
-                <img src="/gallery/papercraft/Kusudamas/photo_2.jpg" alt="Featured Kusudama" class="featured-image">
-                <div class="featured-caption">Complex Kusudama Assembly</div>
-            </div>
-            <div class="featured-item image-protection">
-                <img src="/gallery/landscapes/Morocco/photo_3.jpg" alt="Featured Landscape" class="featured-image">
-                <div class="featured-caption">Moroccan Landscape at Golden Hour</div>
-            </div>
-            <div class="featured-item image-protection">
-                <img src="/gallery/papercraft/Polyhedron/photo_1.jpg" alt="Featured Polyhedron" class="featured-image">
-                <div class="featured-caption">Geometric Polyhedron Study</div>
-            </div>
-            <div class="featured-item image-protection">
-                <img src="/gallery/papercraft/Tesselations/photo_2.jpg" alt="Featured Tessellation" class="featured-image">
-                <div class="featured-caption">Repeating Tessellation Pattern</div>
-            </div>
-            <div class="featured-item image-protection">
-                <img src="/gallery/papercraft/pleats/photo_1.jpg" alt="Featured Pleat" class="featured-image">
-                <div class="featured-caption">Precision Paper Pleating</div>
-            </div>
-            <div class="featured-item image-protection">
-                <img src="/gallery/papercraft/mix/photo_3.jpg" alt="Featured Mix" class="featured-image">
-                <div class="featured-caption">Mixed Media Paper Art</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Lightbox -->
-    <div class="portfolio-lightbox">
-        <button class="lightbox-close">&times;</button>
-        <button class="lightbox-nav prev">&lt;</button>
-        <button class="lightbox-nav next">&gt;</button>
-        <img id="lightbox-img" src="" alt="">
-    </div>
-
-    <script>
-        // Lightbox functionality
-        const lightbox = document.querySelector('.portfolio-lightbox');
-        const lightboxImg = document.querySelector('#lightbox-img');
-        const featuredItems = document.querySelectorAll('.featured-item');
-        let currentIndex = 0;
-
-        featuredItems.forEach((item, index) => {
-            item.addEventListener('click', () => {
-                currentIndex = index;
-                const imgSrc = item.querySelector('img').src;
-                lightboxImg.src = imgSrc;
-                lightbox.style.display = 'flex';
-            });
-        });
-
-        document.querySelector('.lightbox-close').addEventListener('click', () => {
-            lightbox.style.display = 'none';
-        });
-
-        document.querySelector('.lightbox-nav.prev').addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + featuredItems.length) % featuredItems.length;
-            lightboxImg.src = featuredItems[currentIndex].querySelector('img').src;
-        });
-
-        document.querySelector('.lightbox-nav.next').addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % featuredItems.length;
-            lightboxImg.src = featuredItems[currentIndex].querySelector('img').src;
-        });
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (lightbox.style.display === 'flex') {
-                if (e.key === 'Escape') lightbox.style.display = 'none';
-                if (e.key === 'ArrowLeft') document.querySelector('.lightbox-nav.prev').click();
-                if (e.key === 'ArrowRight') document.querySelector('.lightbox-nav.next').click();
-            }
-        });
-
-        // Disable right click
-        document.addEventListener('contextmenu', function(e) {
-            if (e.target.tagName === 'IMG' || e.target.closest('.image-protection')) {
-                e.preventDefault();
-                return false;
-            }
-        });
-
-        // Disable keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
-            // Prevent Ctrl+S, Ctrl+U, Ctrl+Shift+I, F12
-            if (
-                (e.ctrlKey && (e.key === 's' || e.key === 'u')) ||
-                (e.ctrlKey && e.shiftKey && e.key === 'i') ||
-                e.key === 'F12'
-            ) {
-                e.preventDefault();
-                return false;
-            }
-        });
-
-        // Disable drag and drop
-        document.addEventListener('dragstart', function(e) {
-            if (e.target.tagName === 'IMG') {
-                e.preventDefault();
-                return false;
-            }
-        });
-
-        // Disable selection
-        document.addEventListener('selectstart', function(e) {
-            if (e.target.tagName === 'IMG' || e.target.closest('.image-protection')) {
-                e.preventDefault();
-                return false;
-            }
-        });
-    </script>
-
-    <!-- Papercraft Section -->
-    <section class="catalog-section">
-        <h2 class="catalog-title">Papercraft</h2>
-        <div class="albums-grid">
-            <a href="/gallery/papercraft/Flowers" class="album-card">
-                <img src="/gallery/papercraft/Flowers/photo_1.jpg" alt="Flowers" class="album-thumbnail">
-                <h3 class="album-title">Flowers</h3>
-            </a>
-            <a href="/gallery/papercraft/Kirigami" class="album-card">
-                <img src="/gallery/papercraft/Kirigami/photo_1.jpg" alt="Kirigami" class="album-thumbnail">
-                <h3 class="album-title">Kirigami</h3>
-            </a>
-            <a href="/gallery/papercraft/Kusudamas" class="album-card">
-                <img src="/gallery/papercraft/Kusudamas/photo_1.jpg" alt="Kusudamas" class="album-thumbnail">
-                <h3 class="album-title">Kusudamas</h3>
-            </a>
-            <a href="/gallery/papercraft/misc" class="album-card">
-                <img src="/gallery/papercraft/misc/photo_1.jpg" alt="misc" class="album-thumbnail">
-                <h3 class="album-title">misc</h3>
-            </a>
-            <a href="/gallery/papercraft/mix" class="album-card">
-                <img src="/gallery/papercraft/mix/photo_1.jpg" alt="mix" class="album-thumbnail">
-                <h3 class="album-title">mix</h3>
-            </a>
-            <a href="/gallery/papercraft/pleats" class="album-card">
-                <img src="/gallery/papercraft/pleats/photo_1.jpg" alt="pleats" class="album-thumbnail">
-                <h3 class="album-title">pleats</h3>
-            </a>
-            <a href="/gallery/papercraft/Polyhedron" class="album-card">
-                <img src="/gallery/papercraft/Polyhedron/photo_1.jpg" alt="Polyhedron" class="album-thumbnail">
-                <h3 class="album-title">Polyhedron</h3>
-            </a>
-            <a href="/gallery/papercraft/Project_1" class="album-card">
-                <img src="/gallery/papercraft/Project_1/photo_1.jpg" alt="Project_1" class="album-thumbnail">
-                <h3 class="album-title">Project_1</h3>
-            </a>
-            <a href="/gallery/papercraft/Tesselations" class="album-card">
-                <img src="/gallery/papercraft/Tesselations/photo_1.jpg" alt="Tesselations" class="album-thumbnail">
-                <h3 class="album-title">Tesselations</h3>
-            </a>
-            <a href="/gallery/papercraft/mandala" class="album-card">
-                <img src="/gallery/papercraft/mandala/image3.gif" alt="mandala" class="album-thumbnail">
-                <h3 class="album-title">Mandala</h3>
-            </a>
-        </div>
-    </section>
-
-    <!-- Portraits Section -->
-    <section class="catalog-section">
-        <h2 class="catalog-title">Portraits</h2>
-        <div class="albums-grid">
-            <a href="/gallery/portraits/Portrait_001" class="album-card">
-                <img src="/gallery/portraits/Portrait_001/photo_1.jpg" alt="Album 1" class="album-thumbnail">
-                <h3 class="album-title">Portrait_001</h3>
-            </a>
-        </div>
-    </section>
-
-    <!-- Landscapes Section -->
-    <section class="catalog-section">
-        <h2 class="catalog-title">Landscapes</h2>
-        <div class="albums-grid">
-            <a href="/gallery/landscapes/Morocco" class="album-card">
-                <img src="/gallery/landscapes/Morocco/photo_1.jpg" alt="Album 1" class="album-thumbnail">
-                <h3 class="album-title">Morocco</h3>
-            </a>
-        </div>
-    </section>
-</div>
+  <h2 style="margin:24px 0 16px;">Landscapes</h2>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px;">
+    <a href="/gallery/landscapes/Morocco" style="text-decoration:none; color:inherit; border:1px solid #eee; border-radius:8px; padding:12px;">
+      <img src="/gallery/landscapes/Morocco/photo_1.jpg" alt="Morocco" style="width:100%; height:180px; object-fit:cover; border-radius:6px;">
+      <div style="margin-top:8px; font-weight:600;">Morocco</div>
+    </a>
+  </div>
+</section>

@@ -1,17 +1,15 @@
 ---
-layout: page
-description: "my work"
+layout: default
 title: "Projects"
 active: projects
-header-img: "img/lost.png"
 permalink: /projects/
 ---
 
 {% for project in site.projects reversed %}
-  <h2>
-    <a href="{{ project.url }}">
-      {{ project.title }}
-      </a>
-  </h2>
-  <p>{{ project.description }}</p>
+  <article style="margin-bottom:16px;">
+    <h2 style="margin:0 0 4px;">
+      <a href="{{ project.url }}" style="text-decoration:none;">{{ project.title }}</a>
+    </h2>
+    <p style="margin:0; color:#555;">{{ project.description }}</p>
+  </article>
 {% endfor %}
