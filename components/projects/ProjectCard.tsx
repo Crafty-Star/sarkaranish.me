@@ -13,8 +13,8 @@ function initials(title: string) {
 
 function statusBadgeClass(status: ProjectListItem["status"]) {
   return status === "completed"
-    ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-800 dark:text-emerald-200"
-    : "border-amber-500/40 bg-amber-500/10 text-amber-900 dark:text-amber-100";
+    ? "border-emerald-500/40 bg-emerald-500/10 text-emerald-800"
+    : "border-amber-500/40 bg-amber-500/10 text-amber-900";
 }
 
 export function ProjectCard({ project }: { project: ProjectListItem }) {
@@ -23,11 +23,11 @@ export function ProjectCard({ project }: { project: ProjectListItem }) {
 
   return (
     <Link
-      className="group block h-full rounded-xl border border-black/10 bg-background shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground dark:border-white/10"
+      className="group block h-full rounded-xl border border-rule bg-background shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
       href={`/projects/${project.slug}`}
     >
       <article className="flex h-full flex-col overflow-hidden">
-        <div className="relative aspect-video w-full bg-gradient-to-br from-black/5 to-black/[0.12] dark:from-white/10 dark:to-white/[0.04]">
+        <div className="relative aspect-video w-full bg-gradient-to-br from-fg/5 to-fg/[0.12]">
           <span
             aria-hidden
             className="absolute inset-0 flex items-center justify-center text-lg font-semibold uppercase tracking-widest text-foreground/30"
@@ -56,7 +56,7 @@ export function ProjectCard({ project }: { project: ProjectListItem }) {
           <ul className="mt-auto flex flex-wrap items-center gap-2 pt-1">
             {visibleTags.map((tag) => (
               <li key={tag}>
-                <span className="inline-flex rounded-full border border-black/10 px-2 py-0.5 text-[11px] text-foreground/75 dark:border-white/15">
+                <span className="inline-flex rounded-full border border-rule px-2 py-0.5 text-[11px] text-foreground/75">
                   {tag}
                 </span>
               </li>

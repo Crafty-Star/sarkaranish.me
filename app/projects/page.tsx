@@ -5,7 +5,7 @@ export default function ProjectsPage() {
   const projects = getAllProjects();
 
   return (
-    <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
+    <main className="mx-auto w-full max-w-container flex-1 px-4 py-8">
       <h1 className="text-3xl font-semibold tracking-tight text-foreground">
         Projects
       </h1>

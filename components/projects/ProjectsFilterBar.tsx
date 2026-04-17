@@ -40,7 +40,7 @@ export function ProjectsFilterBar({
               className={`rounded-full border px-4 py-2 text-sm font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground ${
                 isActive
                   ? "border-foreground bg-foreground text-background"
-                  : "border-black/15 bg-transparent text-foreground hover:bg-black/[0.04] dark:border-white/20 dark:hover:bg-white/[0.06]"
+                  : "border-fg/15 bg-transparent text-foreground hover:bg-fg/[0.04]"
               }`}
               onClick={() => setActive(key)}
             >
