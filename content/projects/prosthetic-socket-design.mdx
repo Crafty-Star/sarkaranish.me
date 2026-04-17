@@ -1,0 +1,38 @@
+---
+title: "Prosthetic Socket Design"
+headline: "A finite-element-driven workflow for customizing below-knee prosthetic socket geometry to individual residual-limb anatomy, targeting reduced peak stress across the gait cycle."
+description: "Veteran amputees frequently report socket-induced skin breakdown and chronic discomfort, which traces back to off-the-shelf socket geometry concentrating load at bony prominences."
+tags: ["Ansys", "Blender", "FEA", "Biomechanics"]
+status: "completed"
+year: 2023
+thumbnail: "/projects/prosthetic-socket-design/thumbnail.jpg"
+stackLine: "Ansys Mechanical, Blender, [NEED: scan/segmentation tool]"
+category: "Research"
+externalLinks:
+  - label: "Ansys Blog feature"
+    url: "https://www.ansys.com/blog/veterans-hospital-experience-motivates-high-school-student-to-improve-prosthetic-design"
+---
+
+## Problem
+
+Veteran amputees frequently report socket-induced skin breakdown and chronic discomfort, which traces back to off-the-shelf socket geometry concentrating load at bony prominences rather than load-tolerant soft tissue regions. Clinical fitting is iterative, subjective, and expensive — a prosthetist adjusts a socket over multiple appointments based on patient feedback. I wanted to know whether FEA could front-load that iteration before a single plaster cast gets poured, specifically by identifying where a stock socket would concentrate stress on a given limb geometry and reshaping the internal surface accordingly.
+
+## Role
+
+Independent researcher. Developed the evaluation methodology, built the parametric model, ran the gait-cycle simulations, compared stress distributions against the stock-socket baseline, authored the writeup that became the *Ansys Blog* feature. Motivated initially by volunteering at [NEED: which hospital / clinic] and speaking directly with amputee patients about fit issues.
+
+## Approach
+
+Modeled the residual limb and socket as a coupled assembly in Ansys Mechanical. Limb geometry built from [NEED: how — anatomical atlas, scan data, simplified parametric model of the tibial/fibular cross-section], with tissue layered as skin, subcutaneous fat, muscle, and bone using [NEED: hyperelastic Mogin / Ogden / linear-elastic — which material model and why]. Socket geometry started from a conventional patellar-tendon-bearing reference, then modified via Blender to relieve material over the tibial crest and fibular head and add contact area over the patellar tendon and popliteal regions.
+
+Applied gait-cycle loads as a time-series of axial force, shear, and moment at the distal socket interface, sourced from [NEED: published gait-cycle data reference or the specific paper you used for loading profiles]. Contact between limb and socket modeled as [NEED: frictional / bonded / which formulation], which was the methodological decision I spent the most time on — bonded contact overestimates support because it prevents any socket-skin sliding, while pure frictionless underestimates the shear loads that actually cause skin breakdown. Ran frictional with [NEED: coefficient value] based on literature values for silicone-liner interfaces.
+
+## Outcome
+
+The modified geometry reduced peak von Mises stress on the residual limb by approximately 40% over the conventional socket baseline across the simulated gait cycle, concentrated specifically at the previously problematic tibial crest region. Featured on the Ansys Blog ("Veterans Hospital Experience Motivates High School Student to Improve Prosthetic Design," December 2023). Awarded Lemelson Young Inventor and Chevron Special Awards at the Golden Gate Science Fair for the work.
+
+One caveat I'd state upfront to any skeptical reader: this is a simulation-only result on a representative limb geometry, not a clinical validation on a fitted patient. The next step — which I have not run — would be comparing predicted stress maps against pressure-sensor data from an instrumented liner worn by an actual user.
+
+## Limitations
+
+This is a simulation-only result on a representative limb geometry, not a clinical validation on a fitted patient. Material models, boundary conditions, and friction coefficients introduce uncertainty that must be bounded before drawing clinical conclusions.

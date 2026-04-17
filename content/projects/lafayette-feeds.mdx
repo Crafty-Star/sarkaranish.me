@@ -1,0 +1,32 @@
+---
+title: "Lafayette Feeds"
+headline: "A Next.js web application connecting food banks in the Greater Lafayette area with local donors, built to reduce the coordination overhead that keeps surplus food from reaching pantries before it spoils."
+description: "Food banks in Lafayette operate on thin staffing and depend on ad-hoc phone-and-email logistics to match incoming donations with demand."
+tags: ["Next.js", "TypeScript", "Tailwind CSS", "Nginx"]
+status: "in-progress"
+year: 2025
+thumbnail: "/projects/lafayette-feeds/thumbnail.jpg"
+stackLine: "Next.js 15, TypeScript, Tailwind CSS, [NEED: database and auth], Nginx, Ubuntu Server, Tailscale"
+category: "Software"
+externalLinks: []
+---
+
+## Problem
+
+Food banks in Lafayette operate on thin staffing and depend on ad-hoc phone-and-email logistics to match incoming donations with demand. Donors — restaurants, grocery stores, individuals with surplus — often don't know which pantry can accept what, on what timeline, at which hours. The result is wasted food on one side and stocking gaps on the other, for a reason that is fundamentally a software problem.
+
+## Role
+
+Team [NEED: size, and which parts I owned — frontend, backend, database schema, deployment?]. Built during Tech4Change 2025.
+
+## Approach
+
+Next.js 15 App Router on the frontend with Tailwind for styling, [NEED: backend/database — Supabase? Postgres directly? A Next.js API route layer?] for the donation listings and pantry availability data. Designed the core data model around a two-sided marketplace: donors post what they have, pantries post what they need, and the matching layer surfaces compatible pairs by location, perishability window, and accepted-categories filter.
+
+The decision that mattered most: whether to build real-time messaging between donor and pantry or to stay with asynchronous listing claims. We went with asynchronous — a donor posts, a pantry claims, both parties get a confirmation with pickup details. Real-time chat would have been [NEED: hours you estimated] of additional scope during a hackathon and solved a problem that didn't actually exist; the coordination gap is about *discovery*, not about conversation. Shipping the discovery layer well was worth more than shipping a chat layer poorly.
+
+Self-hosted the production instance on my HP EliteDesk Ubuntu server behind Nginx, with a Tailscale-exposed admin endpoint for pushing updates without public SSH exposure.
+
+## Outcome
+
+Won the Tech4Change Hackathon at Purdue (sponsored by Synopsys), November 2025. [NEED: any post-hackathon adoption — did any actual food banks onboard? Is the site live and serving requests?]

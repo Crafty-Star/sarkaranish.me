@@ -1,0 +1,36 @@
+---
+title: "Backpack Load Simulation"
+headline: "A finite-element study of spinal stress distribution under asymmetric backpack loading across multiple carrying configurations, aimed at identifying load positions that minimize long-term compressive and shear stress on lumbar vertebrae."
+description: "Adolescent backpack use is associated with reported back pain in a significant fraction of students, but the biomechanical basis for carry-it-high advice is mostly intuitive rather than quantified."
+tags: ["Ansys", "FEA", "Biomechanics", "Survey"]
+status: "completed"
+year: 2022
+thumbnail: "/projects/backpack-load-simulation/thumbnail.jpg"
+stackLine: "Ansys Mechanical, [NEED: CAD tool used for the spine model]"
+category: "Research"
+externalLinks:
+  - label: "Ansys Blog feature"
+    url: "https://www.ansys.com/blog/high-schooler-simulates-backpack-body-stress-for-science-fair-honors"
+---
+
+## Problem
+
+Adolescent backpack use is associated with reported back pain in a significant fraction of students, but the biomechanical basis for "carry it high and close to the body" advice is mostly intuitive rather than quantified. I wanted to test whether the common-sense rules actually correspond to measurably lower spinal stress, and whether there are configurations — single-strap, low-slung, overloaded top compartment — that produce disproportionately worse loading than a linear model of backpack weight would predict.
+
+## Role
+
+Sole researcher. Built three musculoskeletal models representing different user anthropometries, ran the load simulations, surveyed 100+ students at [NEED: which school] about their actual carrying habits to pair the simulation results with real-world behavior, wrote the analysis that became the second Ansys Blog feature.
+
+## Approach
+
+Modeled the thoracolumbar spine in Ansys Mechanical as a segmented assembly of vertebral bodies with intervertebral disc material between each level, using [NEED: which material models for vertebrae vs. discs — linear-elastic bone, hyperelastic disc?]. Three anthropometric variants captured short, median, and tall torso geometries. Applied backpack load as a distributed force at the shoulder-strap interfaces with a compensating moment reflecting load height relative to the spine's center of mass.
+
+Simulated [NEED: how many] configurations crossing backpack weight (10, 15, 20, 25 lbs or equivalent [NEED: confirm units and values]), strap type (double vs. single), and load height (waist, mid-back, upper back). The survey I ran in parallel captured what students actually did — which let me weight the simulation results by real-world prevalence rather than treating all configurations as equally common.
+
+## Outcome
+
+Identified [NEED: specific finding — which configuration minimized peak stress, and the magnitude of difference between best and worst configurations]. Confirmed quantitatively that asymmetric single-strap carrying produced disproportionately higher shear stress at the lumbar level compared to symmetric double-strap at equivalent total load. Second-place at the Golden Gate STEM Fair. Featured on the Ansys Blog ("High Schooler Simulates Backpack Body Stress for Science Fair Honors," October 2022).
+
+## Limitations
+
+Survey-weighted prevalence improves realism but does not replace longitudinal biomechanics studies; spine models simplify anatomy and loading paths compared to in-vivo measurement.

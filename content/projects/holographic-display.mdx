@@ -1,0 +1,32 @@
+---
+title: "Holographic Display"
+headline: "A dual-axis mechanical rig that rotates and tilts a reflective film to create a persistence-of-vision volumetric display, driven by a Raspberry Pi coordinating gear-reduced stepper motion with synchronized image projection."
+description: "Commercial holographic displays either cost thousands of dollars or rely on fixed-angle Pepper's-ghost illusions that only work from one viewing position."
+tags: ["Raspberry Pi", "Python", "3D printing", "Mechanical design"]
+status: "in-progress"
+year: 2025
+thumbnail: "/projects/holographic-display/thumbnail.jpg"
+stackLine: "Fusion 360, 3D printing, Raspberry Pi, NEMA steppers with worm and sector gearing, slip ring, Python"
+category: "Hardware"
+externalLinks: []
+---
+
+## Problem
+
+Commercial holographic displays either cost thousands of dollars or rely on fixed-angle Pepper's ghost illusions that only work from one viewing position. I wanted to build a display where a rotating reflective surface, driven through a controlled tilt axis and synchronized with a projected image stream, produces a view-dependent image that looks volumetric from multiple angles — at a component cost under [NEED: target cost].
+
+## Role
+
+Sole designer and fabricator.
+
+## Approach
+
+Two axes of motion. Primary axis: a worm-gear turntable driving continuous rotation of the reflective element, with a slip ring handling electrical continuity so the rotation never needs to reverse or rewind. Secondary axis: a sector gear controlling tilt, chosen over a full gear because the tilt range is bounded and a sector eliminates unnecessary mass and cost. Gear ratios [NEED: specific values — e.g., 30:1 worm, 4:1 sector] selected to keep rotational speed low enough for smooth perceived motion while staying above the flicker threshold at the projection frame rate.
+
+Control runs on a Raspberry Pi [NEED: which model — 4, 5?] coordinating stepper drivers with image output through [NEED: HDMI to what — small LCD? Projector? DLP?]. Mechanical structure designed around a modular "cans" enclosure concept — each functional subsystem (motor housing, slip-ring assembly, control electronics, optical path) lives in its own cylindrical module that stacks and aligns without fasteners between units. This was the design call I'm most proud of: it means any one subsystem can be swapped or serviced without disassembling the others, which matters for a project that's still iterating.
+
+The alternative I considered was a monocoque frame with everything mounted to a central plate. Faster to build initially, much worse to iterate on. I chose modularity for the same reason I chose host-side preprocessing on the plotter: this is a machine I'm going to be modifying for months, and up-front integration cost pays itself back many times over across the redesign cycle.
+
+## Outcome
+
+[NEED: current state — mechanical rig assembled, rotation working, any image synchronization demonstrated]. Ongoing.

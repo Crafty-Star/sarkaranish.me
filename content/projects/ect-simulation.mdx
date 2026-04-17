@@ -1,0 +1,38 @@
+---
+title: "ECT Simulation"
+headline: "A finite-element comparison of electroconvulsive therapy electrode montages on high-resolution head models to understand why alternating configurations may recruit different neural networks during seizure induction."
+description: "Electroconvulsive therapy remains one of the most effective treatments for severe schizophrenia and treatment-resistant depression, but montage choice is still largely clinical convention rather than individualized field modeling."
+tags: ["Ansys", "FEA", "Neurostimulation", "Python", "LaTeX"]
+status: "in-progress"
+year: 2024
+thumbnail: "/projects/ect-simulation/thumbnail.jpg"
+stackLine: "Ansys Mechanical, Ansys SpaceClaim, Python for post-processing, LaTeX"
+category: "Research"
+externalLinks:
+  - label: "ECBSMH (conference context)"
+    url: "https://www.ecbsmh.org/"
+---
+
+## Problem
+
+Electroconvulsive therapy remains one of the most effective treatments for severe schizophrenia and treatment-resistant depression, but the electrode montage — where the pads go on the scalp — is still largely chosen by clinical convention rather than individualized field modeling. Different montages deliver current through substantially different cortical volumes, which likely explains variance in seizure threshold and cognitive side effects between patients. No standard FEM workflow existed for comparing montages on a per-patient basis in the literature I reviewed.
+
+## Role
+
+First author. Built the simulation pipeline, ran the montage comparisons, analyzed current density distributions, wrote and presented the conference poster. Collaborated with [NEED: co-author names and their specific contributions — e.g., "Dr. X at University of Poitiers provided the segmented head model and clinical context"].
+
+## Approach
+
+Imported [NEED: segmented head model source — MRI-derived, which atlas, how many tissue compartments] into Ansys Mechanical as a volumetric mesh with distinct material assignments for scalp, skull, CSF, grey matter, and white matter. Applied electrode boundary conditions at [NEED: current amplitude, waveform assumption — DC-equivalent or frequency-domain] across [NEED: number of] montage configurations, including bitemporal, bifrontal, and right unilateral placements, plus the alternating configuration that became the paper's central finding.
+
+The decision I had to make early: model the full time-dependent seizure waveform or solve a quasi-static Laplace problem for current density. The time-dependent approach is more physically complete but computationally expensive and dominated by tissue conductivities that are poorly characterized above a few hundred hertz. I ran quasi-static because the comparative question — *which regions see the highest current density under each montage* — is well-posed at the field level and doesn't require the added uncertainty of dynamic tissue response. That choice is defensible in the ECT modeling literature and let me run more montages on the same timeline.
+
+Compared montages on peak current density, mean current density in target regions of interest [NEED: which ROIs — dorsolateral prefrontal, hippocampus, motor cortex?], and the spatial extent of supra-threshold tissue.
+
+## Outcome
+
+The alternating montage produced current density distributions that differed meaningfully from the static configurations — specifically, [NEED: the quantitative finding as reported in the paper, e.g., "X% greater activation volume in region Y" or "comparable peak density but broader distribution across hemispheres"]. This supports the hypothesis that alternating configurations may recruit different neural networks across successive pulse trains, which is clinically relevant for seizure induction reliability and for understanding why some patients respond to alternating protocols when static ones fail. Poster presented at the 6th European Conference on Brain Stimulation in Mental Health, Lisbon, April 2024. Full paper [NEED: published / under review / in preparation — and venue].
+
+## Limitations
+
+This work models electromagnetic delivery and field distributions; it does not, by itself, prove clinical efficacy, patient-specific seizure outcomes, or long-term cognitive effects. Claims about neural recruitment remain hypotheses until tied to imaging or clinical data at the individual level.

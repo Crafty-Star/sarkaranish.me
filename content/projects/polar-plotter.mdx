@@ -1,0 +1,32 @@
+---
+title: "Polar Plotter"
+headline: "A two-axis polar-coordinate drawing machine that converts mathematical functions and vector art into physical ink drawings at wall scale, driven by NEMA 17 steppers through an Arduino running GRBL."
+description: "Most hobby plotters use Cartesian XY gantries, which scale poorly past roughly A3; polar machines scale with arm length and can draw a circle much larger than the machine's footprint."
+tags: ["Fusion 360", "GRBL", "Arduino", "Python", "3D printing"]
+status: "in-progress"
+year: 2025
+thumbnail: "/projects/polar-plotter/thumbnail.jpg"
+stackLine: "Fusion 360, Bambu Lab 3D printing (PETG, PLA), NEMA 17 steppers, Arduino with CNC Shield, GRBL firmware, Python for G-code generation"
+category: "Hardware"
+externalLinks: []
+---
+
+## Problem
+
+Most hobby plotters use Cartesian XY gantries, which scale poorly past roughly A3 because doubling the drawing area means doubling rail length, belt tension, and frame stiffness requirements. Polar-coordinate machines — one rotating arm, one radial slide — scale linearly with arm length and can draw a circle much larger than the machine's footprint. I wanted to build one both because the kinematics problem is interesting and because I wanted a tool that could render Fourier-series curves and parametric equations at sizes where the math becomes physically legible.
+
+## Role
+
+Sole designer, fabricator, and firmware configurator.
+
+## Approach
+
+Designed the mechanical system in Fusion 360 around two NEMA 17 steppers — one driving the rotating arm through a [NEED: belt ratio or direct drive?], one driving the radial carriage via [NEED: leadscrew, belt, rack-and-pinion?]. Printed the frame, pulleys, and arm structure on a Bambu Lab [NEED: which printer — P1S? X1C?] in PETG for the load-bearing parts and PLA for non-structural covers.
+
+Control runs on an Arduino [NEED: Mega or Uno — check your build notes] with a CNC Shield, flashed with GRBL firmware configured for the polar kinematics. The decision I wrestled with: GRBL assumes Cartesian XY by default, so I either needed to modify the firmware to accept polar G-code directly or keep GRBL stock and preprocess Cartesian input into motor-space commands on the host side before sending. I chose host-side preprocessing. Modifying GRBL would have been the cleaner long-term solution but would have meant forking and maintaining firmware for what is fundamentally a one-off machine; a Python script that converts SVG or function input into per-motor step sequences gave me more flexibility with less risk of bricking the controller between iterations.
+
+Four build phases: mechanical prototype, motor and firmware integration, pen-lift solenoid and path optimization, enclosure and cable management. Currently completing phase [NEED: which phase].
+
+## Outcome
+
+[NEED: largest drawing size achieved, drawing time for a reference piece, any specific curves/functions you've plotted that are worth naming]. Physical artifacts hanging in my room.
